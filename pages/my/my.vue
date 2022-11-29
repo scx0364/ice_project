@@ -9,7 +9,7 @@
 				<button type="default" class="sign">
 				<text>签到</text>
 				<image src="../../images/my/corn.png" mode=""></image>
-				<!-- <image src="require('E:\ice_project\images/金币 2.png')" mode=""></image> -->
+				
 				<uni-icons type="forward" color="#DCDCDC" class="forward"></uni-icons>
 					
 				</button>
@@ -23,8 +23,7 @@
 					<text class="times">取冰次数</text>
 					<view class="times_box">
 						<text class="times_num">18</text><text>次</text>
-					</view>
-					
+					</view>	
 				</view>
 				<view class="item_box">
 					<text class="times">我的积分</text>
@@ -64,7 +63,7 @@
 				</view>
 			</view>
 			<!-- 登录按钮 -->
-			<button type="default" class="btn_login">登录</button>
+			<button type="default" class="btn_login" open-type="getPhoneNumber" @getphonenumber="getphonenumber">登录</button>
 		</view>
 	
 	
@@ -77,7 +76,31 @@
 			return {
 				
 			};
-		}
+		},
+    onLoad() {
+      // 页面加载时获取用户的登录code
+      // this.getUserInfo()
+    },
+    methods:{
+      getphonenumber(e) {
+        console.log(e)
+        
+      },
+      getUserInfo() {
+        uni.login({
+          success: (res) => {
+            console.log(res.code)
+            // 判断是否登录成功
+            // if(res.errMsg != 'login:ok') return uni.showToast({
+            //   icon:'none',
+            //   title:'登录失败！'
+            // })
+            
+          }
+        })
+      }
+      
+    }
 	}
 </script>
 
