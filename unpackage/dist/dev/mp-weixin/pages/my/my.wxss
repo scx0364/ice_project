@@ -1,0 +1,145 @@
+/* 水平间距 */
+/* 水平间距 */
+.my_container {
+  position: relative;
+}
+.my_info {
+  position: absolute;
+  z-index: 1;
+  box-sizing: border-box;
+  height: 404rpx;
+  width: 100%;
+  background-color: #447CFF;
+  padding: 60rpx 32rpx 0 32rpx;
+}
+.my_info .my_selfinfo {
+  position: relative;
+  height: 132rpx;
+  display: flex;
+  align-items: center;
+}
+.my_info .my_selfinfo .my_avatar {
+  display: block;
+  width: 132rpx;
+  height: 132rpx;
+  background-color: white;
+}
+.my_info .my_selfinfo .my_nickname {
+  font-size: 36rpx;
+  margin-left: 20rpx;
+  color: #fff;
+  font-weight: 500;
+}
+.my_info .my_selfinfo .sign {
+  width: 148rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  position: absolute;
+  right: 36rpx;
+  font-size: 24rpx;
+  border-radius: 48rpx;
+}
+.my_info .my_selfinfo .sign image {
+  display: inline-block;
+  width: 48rpx;
+  height: 48rpx;
+  position: absolute;
+  top: 4rpx;
+  left: 4rpx;
+}
+.my_info .my_selfinfo .sign text {
+  display: inline-block;
+  margin-left: 20rpx;
+}
+.my_info .my_selfinfo .sign .forward {
+  position: absolute;
+  right: 2rpx;
+  top: 0rpx;
+}
+.cor_container {
+  position: absolute;
+  top: 229rpx;
+  left: 32rpx;
+  z-index: 999;
+}
+.cor_container .cor_box {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 686rpx;
+  height: 175rpx;
+  background-color: black;
+  border-radius: 24rpx;
+  box-shadow: 0 9rpx 4rpx 0 rgba(0, 0, 0, 0.06);
+}
+.cor_container .cor_box .item_box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 24rpx;
+  color: #C2C2C2;
+}
+.cor_container .cor_box .item_box .times_box {
+  margin-top: 24rpx;
+}
+.cor_container .cor_box .item_box .times_box .times_num {
+  font-size: 48rpx;
+}
+.function_container {
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #F7F8FA;
+  position: absolute;
+  top: 337rpx;
+  z-index: 2;
+  border-radius: 30rpx 30rpx 0 0;
+  padding-top: 103rpx;
+  padding-left: 32rpx;
+  padding: 103rpx 32rpx 0;
+}
+.function_container .functions {
+  font-size: 28rpx;
+  font-weight: 700;
+}
+.function_container .func_cate {
+  display: flex;
+  flex-wrap: wrap;
+  height: 396rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-top: 24rpx;
+  padding: 44rpx 0 0 24rpx;
+}
+.function_container .func_cate .cate_item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 122rpx;
+  height: 136rpx;
+  margin-right: 50rpx;
+}
+.function_container .func_cate .cate_item image {
+  display: block;
+  width: 80rpx;
+  height: 80rpx;
+}
+.function_container .func_cate .cate_item text {
+  font-size: 26rpx;
+}
+.function_container .func_cate .cate_item:nth-child(4) {
+  margin-right: 0;
+}
+.function_container .btn_login {
+  width: 670rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  background-color: #447CFF;
+  font-size: 32rpx;
+  font-weight: 700;
+  box-shadow: 0px 1rpx 0px 0px rgba(0, 0, 0, 0.18) inset;
+  border-radius: 79rpx;
+  position: fixed;
+  bottom: 51rpx;
+  left: 40rpx;
+}
