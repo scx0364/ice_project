@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@escook/request-miniprogram": "^0.2.1",
     "vue": "^3.2.45"
   }
 }

@@ -22,7 +22,7 @@
   display: block;
   width: 132rpx;
   height: 132rpx;
-  background-color: white;
+  border-radius: 66rpx;
 }
 .my_info .my_selfinfo .my_nickname {
   font-size: 36rpx;

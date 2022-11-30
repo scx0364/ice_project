@@ -9,15 +9,34 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "我的中心",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": false,
+				"navigationBarBackgroundColor": "#447CFF",
+				"navigationBarTextStyle": "black"
             }
             
         }
     ],
+	"subPackages": [
+		{
+			"root": "subpkg",
+			"pages": [
+				
+			{
+                    "path" : "coupon/coupon",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "优惠券",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
+		}
+	],
 	"globalStyle": {
-		"navigationBarTextStyle": "white",
+		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#447CFF",
+		"navigationBarBackgroundColor": "#fff",
 		"backgroundColor": "#F6F6F6",
 		"app-plus": {
 			"background": "#efeff4"

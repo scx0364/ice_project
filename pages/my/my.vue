@@ -3,8 +3,9 @@
 		<view class="my_info">
 			<!-- 昵称头像区域 -->
 			<view class="my_selfinfo">
-				<image src="" mode="" class="my_avatar"></image>
-				<text class="my_nickname">美少女战士</text>
+				<!-- <image src="../../images/my/avatar.png" mode="" class="my_avatar"></image> -->
+				<image :src="userInfo.avatar" mode="" class="my_avatar"></image>
+				<text class="my_nickname">{{userInfo.nickname}}</text>
 				<!-- 签到按钮 -->
 				<button type="default" class="sign">
 				<text>签到</text>
@@ -22,13 +23,13 @@
 				<view class="item_box">
 					<text class="times">取冰次数</text>
 					<view class="times_box">
-						<text class="times_num">18</text><text>次</text>
+						<text class="times_num">{{times.q_num}}</text><text>次</text>
 					</view>	
 				</view>
 				<view class="item_box">
 					<text class="times">我的积分</text>
 					<view class="times_box">
-						<text class="times_num">898</text><text>分</text>
+						<text class="times_num">{{times.jifen}}</text><text>分</text>
 					</view>
 					
 				</view>
@@ -63,7 +64,8 @@
 				</view>
 			</view>
 			<!-- 登录按钮 -->
-			<button type="default" class="btn_login" open-type="getPhoneNumber" @getphonenumber="getphonenumber">登录</button>
+			<!-- <button type="default" class="btn_login" open-type="getPhoneNumber" @getphonenumber="getphonenumber">登录</button> -->
+			<button type="default" class="btn_login" open-type="getUserInfo" @getuserinfo="getUserInfo" v-show="!token">登录</button>
 		</view>
 	
 	
@@ -74,31 +76,133 @@
 	export default {
 		data() {
 			return {
+				// token:''
+				token:JSON.parse(uni.getStorageSync('token') || '0'),
+				// userInfo:{}
+				userInfo:{avatar:"../../images/my/avatar.png",nickname:"未登录"},
 				
+				flag:false,
+				times:{q_num:0,jifen:0}
 			};
 		},
     onLoad() {
-      // 页面加载时获取用户的登录code
-      // this.getUserInfo()
+      // 如果用户已经登录了，页面加载时请求用户信息，渲染头像昵称
+	  if(this.token) {
+		  this.getUserMess()
+		  
+	  }
     },
     methods:{
       getphonenumber(e) {
-        console.log(e)
+        // console.log(e)
         
       },
-      getUserInfo() {
+      getUserInfo(e) {
+		  this.flag = true
+		  // console.log(e.detail)
+		  let that = this
+		  // if(flag) {
+			 //  r
+		  // }
         uni.login({
+			 
           success: (res) => {
-            console.log(res.code)
+            // console.log(res.code)
             // 判断是否登录成功
-            // if(res.errMsg != 'login:ok') return uni.showToast({
-            //   icon:'none',
-            //   title:'登录失败！'
-            // })
-            
+            if(res.errMsg != 'login:ok') return uni.showToast({
+              icon:'none',
+              title:'登录失败'
+            })
+			console.log(1)
+			// 准备参数对象
+			const query = {
+				// rawData:e.detail.rawData,
+				// signature:e.detail.signature,
+				encryptedData:encodeURIComponent(e.detail.encryptedData),
+				iv:encodeURIComponent(e.detail.iv),
+				code:res.code
+			}
+            // 发起请求，携带code换取token
+			const res1 = uni.$http.post('http://192.168.121.56:8787/api/demo/login',query)
+			
+			
+			res1.then(data => {
+				
+				console.log(data.data)
+				if(data.data.msg != '登录成功') {
+					uni.$showMsg('登录失败！')
+					console.log(2)
+					return
+				} else {
+					// 更新token的值
+					that.token = data.data.data.token
+					this.saveTokenToStorage(data.data.data.token)
+					uni.showToast({
+					  icon:'none',
+					  title:'登录成功！'
+					})
+					// 页面重载
+					this.reLoadPages()
+				}
+				
+				
+				       
+			}) 
+			
           }
         })
-      }
+      },
+	  // 将token保存在本地
+	  saveTokenToStorage(tok_string) {
+		  uni.setStorageSync('token',JSON.stringify(tok_string))
+	  },
+	  // 将用户信息存储在本地
+	  // saveUserinfoToStorage(user) {
+	  // 		  uni.setStorageSync('userInfo',JSON.stringify(user))
+	  // },
+	  // 页面重载
+	  reLoadPages() {
+		  const pages = getCurrentPages()
+		  // 声明一个pages使用getCurrentPages方法
+		  const curPage = pages[pages.length - 1]
+		  // 声明一个当前页面
+		  curPage.onLoad(curPage.options) // 传入参数
+		  curPage.onShow()
+		  curPage.onReady()
+		  // 执行刷新
+		  // 请求用户信息
+		  this.getUserMess()
+	  },
+	  // 请求用户信息
+	  getUserMess() {
+		 uni.request({
+		 	url:'http://192.168.121.56:8787/api/demo/user_info',
+			method:'POST',
+			header: {
+				'content-type':  'application/json',
+				'token':this.token
+			},
+			// 返回用户信息，头像昵称
+			success:(res2) => {
+				// console.log(res2.data.data)
+				// 更新用户信息
+				this.renewUserInfo(res2.data.data.user_info,res2.data.data)
+				// 将用户信息储存在本地
+				// 更新取冰次数
+				
+				
+			}
+		 })
+		 
+	  },
+	  //更新用户信息
+	  renewUserInfo(info,times) {
+		  this.userInfo = info
+		  this.times = times
+		  // 将用户信息储存在本地
+		  // this.saveUserinfoToStorage(this.userInfo)
+	  },
+	  
       
     }
 	}
@@ -127,7 +231,8 @@
 			display: block;
 			width: 132rpx;
 			height: 132rpx;
-			background-color: white;
+			border-radius: 66rpx;
+			// background-color: white;
 		}
 		.my_nickname {
 			font-size: 36rpx;

@@ -3,10 +3,18 @@
     "pages/index/index",
     "pages/my/my"
   ],
+  "subPackages": [
+    {
+      "root": "subpkg",
+      "pages": [
+        "coupon/coupon"
+      ]
+    }
+  ],
   "window": {
-    "navigationBarTextStyle": "white",
+    "navigationBarTextStyle": "black",
     "navigationBarTitleText": "uni-app",
-    "navigationBarBackgroundColor": "#447CFF",
+    "navigationBarBackgroundColor": "#fff",
     "backgroundColor": "#F6F6F6"
   },
   "usingComponents": {}
