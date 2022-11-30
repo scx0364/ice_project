@@ -104,16 +104,36 @@
 				}],
 				// 请求的参数对象
 				reqObj:{
-					status:'', // 状态
+					status:'', // 状态:1,2,3
 					limit:5, // 每页数量
-					pages:'' // 当前的页码
-				}
+					pages:1 // 当前的页码
+				},
+        // 优惠券列表
+        coupons:[]
 			};
 		},
 		methods:{
-			checked(i) {
+			 checked(i) {
+        // 1.让active和当前的index相等
 				this.active = i
+        // 2.让status与当前的状态对应：status=index + 1
+        this.reqObj.status = i + 1
+        // 3.发起请求，获取优惠券列表信息
+        // const await uni.$http.post('',reqObj)
+        uni.$sendRequest({
+        	url: '/api/public/v1/home/swiperdata',
+        	method: 'GET',
+        	// data: options.data || {},
+          // header:options.header,
+        	success: (res) => {
+        		console.log(res)
+         
+        	},
+          })
 			}
+      
+      
+      
 		}
 	}
 </script>
@@ -183,7 +203,7 @@
 	.dashed_line {
 		height: 128rpx;
 		margin-left: 36rpx;
-		border: 2rpx dashed #B38D57;
+		border-left: 1rpx dashed #B38D57;
 	}
 	.coupons_info {
 		position: relative;
@@ -257,7 +277,7 @@
 	.dashed_line {
 		height: 128rpx;
 		margin-left: 36rpx;
-		border: 2rpx dashed #989898;
+		border-left: 1rpx dashed #989898;
 	}
 	.coupons_info {
 		position: relative;

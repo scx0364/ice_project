@@ -22,13 +22,22 @@ const _sfc_main = {
       reqObj: {
         status: "",
         limit: 5,
-        pages: ""
-      }
+        pages: 1
+      },
+      coupons: []
     };
   },
   methods: {
     checked(i) {
       this.active = i;
+      this.reqObj.status = i + 1;
+      common_vendor.index.$sendRequest({
+        url: "/api/public/v1/home/swiperdata",
+        method: "GET",
+        success: (res) => {
+          console.log(res);
+        }
+      });
     }
   }
 };
@@ -63,5 +72,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/ice_project/subpkg/coupon/coupon.vue"]]);
+var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/\u53F2\u5F69\u971Eweb/web/ice_porject/subpkg/coupon/coupon.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -30,6 +30,15 @@
                 }
                 
                 }
+                ,{
+                    "path" : "exchange_points/exchange_points",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		}
 	],

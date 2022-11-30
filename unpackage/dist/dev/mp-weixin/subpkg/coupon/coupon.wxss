@@ -62,7 +62,7 @@
 .seletced_item0 .coupons .dashed_line {
   height: 128rpx;
   margin-left: 36rpx;
-  border: 2rpx dashed #B38D57;
+  border-left: 1rpx dashed #B38D57;
 }
 .seletced_item0 .coupons .coupons_info {
   position: relative;
@@ -131,7 +131,7 @@
 .seletced_item1 .coupons .dashed_line {
   height: 128rpx;
   margin-left: 36rpx;
-  border: 2rpx dashed #989898;
+  border-left: 1rpx dashed #989898;
 }
 .seletced_item1 .coupons .coupons_info {
   position: relative;
