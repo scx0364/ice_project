@@ -1,7 +1,6 @@
 {
   "name": "ice_project",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +9,18 @@
   "license": "ISC",
   "dependencies": {
     "@escook/request-miniprogram": "^0.2.1",
-    "vue": "^3.2.45"
-  }
+    "vue": "^3.2.45",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scx0364/ice_project.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/scx0364/ice_project/issues"
+  },
+  "homepage": "https://github.com/scx0364/ice_project#readme",
+  "description": ""
 }

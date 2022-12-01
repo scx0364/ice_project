@@ -74,14 +74,16 @@
 </template>
 
 <script>
+	import {mapState,mapMutations} from 'vuex'
   export default {
     data() {
       return {
         // token:''
-        token: JSON.parse(uni.getStorageSync('token') || '0'),
+        // token: JSON.parse(uni.getStorageSync('token') || '0'),
         // userInfo:{}
         userInfo: {
-          avatar: "../../images/my/avatar.png",
+          avatar: "../../images/points/coco.png",
+          // avatar: "E:\ice_project\images\my/avatar.png",
           nickname: "未登录"
         },
 
@@ -92,18 +94,20 @@
         }
       };
     },
+	computed:{
+		...mapState(['token'])
+	},
     onLoad() {
       // 如果用户已经登录了，页面加载时请求用户信息，渲染头像昵称
       if (this.token) {
         this.getUserMess()
 
       }
+	  // console.log(this.token)
     },
     methods: {
-      getphonenumber(e) {
-        // console.log(e)
-
-      },
+		// 引入index.js中更新token的方法
+		...mapMutations(['updateToken']),
       getUserInfo(e) {
         this.flag = true
         // console.log(e.detail)
@@ -120,7 +124,7 @@
               icon: 'none',
               title: '登录失败'
             })
-            console.log(1)
+            // console.log(1)
             // 准备参数对象
             const query = {
               // rawData:e.detail.rawData,
@@ -135,14 +139,17 @@
 
             res1.then(data => {
 
-              console.log(data.data)
+              // console.log(data.data)
               if (data.data.msg != '登录成功') {
                 uni.$showMsg('登录失败！')
-                console.log(2)
+                // console.log(2)
                 return
               } else {
                 // 更新token的值
-                that.token = data.data.data.token
+				
+				that.updateToken(data.data.data.token)
+                
+				// console.log(that.token)
                 this.saveTokenToStorage(data.data.data.token)
                 uni.showToast({
                   icon: 'none',
@@ -179,8 +186,9 @@
       },
       // 请求用户信息
       getUserMess() {
+		  // console.log(this.token)
         uni.request({
-          url: '/demo/user_info',
+          url: 'http://192.168.121.56:8787/api/demo/user_info',
           method: 'POST',
           header: {
             'content-type': 'application/json',

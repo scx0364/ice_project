@@ -1,29 +1,32 @@
 <template>
+	<view class="container">
+		
+	
 	<view class="tab_nav">
 		<!-- tab栏 -->
-		<view  :class="['nav',i==active? 'active':'']" v-for="(item,i) in navList" :key="i">
-			<view class="nav_title"  @click="checked(i)">
+		<view :class="['nav',i==active? 'active':'']" v-for="(item,i) in navList" :key="i">
+			<view class="nav_title" @click="checked(i)">
 				{{item.title}}
 			</view>
-			
+
 		</view>
-		
+
 	</view>
 	<!-- 优惠券区域 -->
 	<view class="seletced_item0" v-if="active == 0">
 		<!-- 优惠券 -->
-		<view class="coupons">
+		<view class="coupons" v-for="(item,i) in coupons1" :key="i">
 			<!-- 左侧金额 -->
 			<view class="price_box">
 				<view class="price">
 					<text class="money_mark">￥</text>
-					<text class="num">6</text>
+					<text class="num">{{item.money}}</text>
 				</view>
 				<text class="coupon_name">抵扣券</text>
 			</view>
 			<!-- 分界线 -->
 			<view class="dashed_line">
-				
+
 			</view>
 			<!-- 右侧详情 -->
 			<view class="coupons_info">
@@ -33,44 +36,44 @@
 			</view>
 		</view>
 	</view>
-	<view class="seletced_item1" v-if="active == 1">
+	<view class="seletced_item1" v-if="active == 1" v-for="(item2,i) in coupons2" :key="i">
 		<!-- 优惠券 -->
 		<view class="coupons">
 			<!-- 左侧金额 -->
 			<view class="price_box">
 				<view class="price">
 					<text class="money_mark">￥</text>
-					<text class="num">6</text>
+					<text class="num">{{item2.money}}</text>
 				</view>
 				<text class="coupon_name">抵扣券</text>
 			</view>
 			<!-- 分界线 -->
 			<view class="dashed_line">
-				
+
 			</view>
 			<!-- 右侧详情 -->
 			<view class="coupons_info">
 				<text class="activity">活动优惠</text>
-				<view  class="to_use">已使用</view>
+				<view class="to_use">已使用</view>
 				<text class="use_time">有效期：2022.11.19 ~ 2022.11.26</text>
 			</view>
 		</view>
-		
+
 	</view>
-	<view class="seletced_item1" v-if="active == 2">
+	<view class="seletced_item1" v-if="active == 2" v-for="(item3,i) in coupons3" :key="i">
 		<!-- 优惠券 -->
-		<view class="coupons">
+		<view class="coupons" >
 			<!-- 左侧金额 -->
 			<view class="price_box">
 				<view class="price">
 					<text class="money_mark">￥</text>
-					<text class="num">6</text>
+					<text class="num">{{item3.money}}</text>
 				</view>
 				<text class="coupon_name">抵扣券</text>
 			</view>
 			<!-- 分界线 -->
 			<view class="dashed_line">
-				
+
 			</view>
 			<!-- 右侧详情 -->
 			<view class="coupons_info">
@@ -79,242 +82,385 @@
 				<text class="use_time">有效期：2022.11.19 ~ 2022.11.26</text>
 			</view>
 		</view>
-		
+
 	</view>
 	<my-button :text="text" v-if="active == 0"></my-button>
+	</view>
 </template>
 
 <script>
+	import {
+		mapState
+	} from 'vuex'
 	export default {
 		data() {
 			return {
-				text:'去兑换',
-				active:0,
-				navList:[{
-					index:0,
-					title:'未使用'
-				},
-				{
-					index:1,
-					title:'已使用'
-				},
-				{
-					index:2,
-					title:'已过期'
-				}],
+				text: '去兑换',
+				active: 0,
+				navList: [{
+						index: 0,
+						title: '未使用'
+					},
+					{
+						index: 1,
+						title: '已使用'
+					},
+					{
+						index: 2,
+						title: '已过期'
+					}
+				],
 				// 请求的参数对象
-				reqObj:{
-					status:'', // 状态:1,2,3
-					limit:5, // 每页数量
-					pages:1 // 当前的页码
+				reqObj: {
+					status: '', // 状态:1,2,3
+					limit: 6, // 每页数量
+					pages: 1 // 当前的页码
 				},
-        // 优惠券列表
-        coupons:[]
+				// 优惠券列表
+				coupons1: [],
+				coupons2:[],
+				coupons3:[],
+				// 优惠券总数
+				total: 0,
+				// 定义节流阀，防止重复请求
+				isLoading: false
 			};
 		},
-		methods:{
-			 checked(i) {
-        // 1.让active和当前的index相等
+		// 页面加载
+		onLoad() {
+			this.getCouponList(this.active)
+		},
+		computed: {
+			...mapState(['token'])
+		},
+		methods: {
+			checked(i) {
+				// if(this.active == i) return
+				// let that = this
+				// 1.让active和当前的index相等
 				this.active = i
-        // 2.让status与当前的状态对应：status=index + 1
-        this.reqObj.status = i + 1
-        // 3.发起请求，获取优惠券列表信息
-        // const await uni.$http.post('',reqObj)
-        uni.$sendRequest({
-        	url: '/api/public/v1/home/swiperdata',
-        	method: 'GET',
-        	// data: options.data || {},
-          // header:options.header,
-        	success: (res) => {
-        		console.log(res)
-         
-        	},
-          })
-			}
-      
-      
-      
+				// 多次触发，触发之前重置coupons和total值 
+				this.coupons1 = [],
+				this.coupons2 = [],
+				this.coupons3 = [],
+				this.total = 0
+				// 请求数据
+				this.getCouponList(i)
+				// 2.让status与当前的状态对应：status=index + 1
+			// 	this.reqObj.status = i + 1
+			// 	// 多次触发，触发之前重置coupons和total值
+
+			// 	// 3.发起请求，获取优惠券列表信息
+			// 	// 开始请求，打开节流阀
+			// 	this.isLoading = true
+			// 	// console.log(typeof(this.coupons))
+
+			// 	uni.request({
+			// 		url: 'http://192.168.121.56:8787/api/demo/list',
+			// 		method: 'POST',
+			// 		data: this.reqObj,
+			// 		header: {
+						
+			// 			'token': this.token
+
+			// 		},
+			// 		success: (res) => {
+			
+			// 			// 请求完成，关闭节流阀
+			// 			that.isLoading = false
+			// 			// 判断请求是否失败
+			// 			if (res.errMsg != 'request:ok') {
+			// 				uni.$showMsg('数据请求失败！')
+
+			// 				return
+			// 			}
+			// 			// 请求成功，更新优惠券列表,将新旧数据拼接，防止覆盖
+			// 			that.coupons1 = [...that.coupons1,...res.data.data.data.filter(x => x.status == 1)]
+			// 			that.coupons2 = [...that.coupons2,...res.data.data.data.filter(x => x.status == 2)]
+			// 			that.coupons3 = [...that.coupons3,...res.data.data.data.filter(x => x.status == 3)]
+			// 			console.log()
+			// 			// 更新优惠券总数
+			// 			that.total = res.data.data.total
+			// 			console.log(that.total)
+
+			// 		}
+			// 	})
+
+			},
+			
+			
+
+
+		// 请求数据的方法
+		getCouponList(i) {
+			let that = this
+			this.reqObj.status = i + 1
+			// 多次触发，触发之前重置coupons和total值
+			
+			// 3.发起请求，获取优惠券列表信息
+			// 开始请求，打开节流阀
+			this.isLoading = true
+			// console.log(typeof(this.coupons))
+			
+			uni.request({
+				url: 'http://192.168.121.56:8787/api/demo/list',
+				method: 'POST',
+				data: this.reqObj,
+				header: {
+					
+					'token': this.token
+			
+				},
+				success: (res) => {
+						
+					// 请求完成，关闭节流阀
+					that.isLoading = false
+					// 判断请求是否失败
+					if (res.errMsg != 'request:ok') {
+						uni.$showMsg('数据请求失败！')
+			
+						return
+					}
+					// 请求成功，更新优惠券列表,将新旧数据拼接，防止覆盖
+					that.coupons1 = [...that.coupons1,...res.data.data.data.filter(x => x.status == 1)]
+					that.coupons2 = [...that.coupons2,...res.data.data.data.filter(x => x.status == 2)]
+					that.coupons3 = [...that.coupons3,...res.data.data.data.filter(x => x.status == 3)]
+					// console.log()
+					// 更新优惠券总数
+					that.total = res.data.data.total
+					// console.log(that.total)
+			
+				}
+			})
+			
 		}
+		},
+		// 触底刷新
+		onReachBottom() {
+			console.log(this.total)
+			console.log(this.reqObj.pages)
+			// console.log(this.total)
+			// 判断是否还有数据
+			if (this.reqObj.limit * this.reqObj.pages >= this.total) {
+				uni.$showMsg('数据加载完毕！')
+				return
+			}
+			// 如果还有数据，让当前的页码自增加1
+			this.reqObj.pages += 1
+			// 判断是否有请求正在执行
+			if (this.isLoading) return
+			// 如果没有请求正在执行，则请求下一页数据,选中项不变
+			// this.checked(this.active)
+			this.getCouponList(this.active)
+			// console.log(this.total)
+		}
+		
 	}
 </script>
 
 <style lang="scss">
-.tab_nav {
-	height: 94rpx;
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	background-color: #fff;
-	.nav {
-		font-size: 32rpx;
-		
+	.container {
+		padding-bottom: 150rpx;
 	}
-	.active{
-		color: #447cff;
-		position: relative;
-		&::after{
-			content: '';
-			position: absolute;
-			top: 48rpx;
-			left: 24rpx;
-			width: 48rpx;
-			height: 4rpx;
-			background-color: #447cff;
-			border-radius: 200px;
-			
-		}
-	}
-	
-}
-.seletced_item0 {
-	box-sizing: border-box;
-	padding: 0 32rpx;
-	.coupons {
+	.tab_nav {
+		height: 94rpx;
 		display: flex;
+		justify-content: space-around;
 		align-items: center;
-		height: 184rpx;
-		background: linear-gradient(105deg,#fee6b8, #f8d998 100%);
-		border: 2rpx solid #b38d57;
-		border-radius: 24px;
-		box-shadow: 0 9rpx 14rpx 0 rgba(254,230,183,0.44);
-		margin-top: 24rpx;
-		.price_box {
-			height: 136rpx;
-			width: 92rpx;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			margin-left: 44rpx;
-			.money_mark {
-				font-size: 26rpx;
-				color: #8B5121;
-			}
-			.num {
-				font-size: 62rpx;
-				font-weight: 700;
-				color: #8B5121;
-			}
-			.coupon_name {
-				font-size: 26rpx;
-				color: #A98854;
-			}
-		}
-		
-	.dashed_line {
-		height: 128rpx;
-		margin-left: 36rpx;
-		border-left: 1rpx dashed #B38D57;
-	}
-	.coupons_info {
-		position: relative;
-		width: 434rpx;
-		height: 92rpx;
-		margin-left: 36rpx;
-		.activity {
-			position: absolute;
-			top: 0;
-			left: 0;
+		background-color: #fff;
+
+		.nav {
 			font-size: 32rpx;
-			color: #8b5121;
+
 		}
-		.to_use {
-			position: absolute;
-			top: 0;
-			right: 0;
-			width: 148rpx;
-			height: 46rpx;
-			line-height: 46rpx;
-			font-size: 28rpx;
-			color: #fff;
-			background-color: #b38d57;
-			border-radius: 92rpx;
+
+		.active {
+			color: #447cff;
+			position: relative;
+
+			&::after {
+				content: '';
+				position: absolute;
+				top: 48rpx;
+				left: 24rpx;
+				width: 48rpx;
+				height: 4rpx;
+				background-color: #447cff;
+				border-radius: 200px;
+
+			}
 		}
-		.use_time {
-			position: absolute;
-			left: 0;
-			bottom: 0;
-			font-size: 22rpx;
-			color: #828282;
-		}
+
 	}
-	}
-}
-.seletced_item1 {
-	box-sizing: border-box;
-	padding: 0 32rpx;
-	.coupons {
-		display: flex;
-		align-items: center;
-		height: 184rpx;
-		background: #fff;
-		
-		border-radius: 24px;
-		box-shadow: 0 9rpx 14rpx 0 rgba(240,240,240,0.44);
-		margin-top: 24rpx;
-		.price_box {
-			height: 136rpx;
-			width: 92rpx;
+
+	.seletced_item0 {
+		box-sizing: border-box;
+		padding: 0 32rpx;
+
+		.coupons {
 			display: flex;
-			flex-direction: column;
 			align-items: center;
-			margin-left: 44rpx;
-			color: #989898;
-			.money_mark {
-				font-size: 26rpx;
-				
+			height: 184rpx;
+			background: linear-gradient(105deg, #fee6b8, #f8d998 100%);
+			border: 2rpx solid #b38d57;
+			border-radius: 24rpx;
+			box-shadow: 0 9rpx 14rpx 0 rgba(254, 230, 183, 0.44);
+			margin-top: 24rpx;
+
+			.price_box {
+				height: 136rpx;
+				width: 92rpx;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				margin-left: 44rpx;
+
+				.money_mark {
+					font-size: 26rpx;
+					color: #8B5121;
+				}
+
+				.num {
+					font-size: 62rpx;
+					font-weight: 700;
+					color: #8B5121;
+				}
+
+				.coupon_name {
+					font-size: 26rpx;
+					color: #A98854;
+				}
 			}
-			.num {
-				font-size: 62rpx;
-				font-weight: 700;
-				
+
+			.dashed_line {
+				height: 128rpx;
+				margin-left: 36rpx;
+				border-left: 1rpx dashed #B38D57;
 			}
-			.coupon_name {
-				font-size: 26rpx;
-				
+
+			.coupons_info {
+				position: relative;
+				width: 434rpx;
+				height: 92rpx;
+				margin-left: 36rpx;
+
+				.activity {
+					position: absolute;
+					top: 0;
+					left: 0;
+					font-size: 32rpx;
+					color: #8b5121;
+				}
+
+				.to_use {
+					position: absolute;
+					top: 0;
+					right: 0;
+					width: 148rpx;
+					height: 46rpx;
+					line-height: 46rpx;
+					font-size: 28rpx;
+					color: #fff;
+					background-color: #b38d57;
+					border-radius: 92rpx;
+				}
+
+				.use_time {
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					font-size: 22rpx;
+					color: #828282;
+				}
 			}
 		}
-		
-	.dashed_line {
-		height: 128rpx;
-		margin-left: 36rpx;
-		border-left: 1rpx dashed #989898;
 	}
-	.coupons_info {
-		position: relative;
-		width: 434rpx;
-		height: 92rpx;
-		margin-left: 36rpx;
-		color: #989898;
-		.activity {
-			position: absolute;
-			top: 0;
-			left: 0;
-			font-size: 32rpx;
-			
-			
-		}
-		.to_use {
-			position: absolute;
-			top: 0;
-			right: 0;
-			width: 148rpx;
-			height: 46rpx;
-			text-align: center;
-			line-height: 46rpx;
-			font-size: 28rpx;
-			// color: #fff;
-			background-color: #fff;
-			border-radius: 92rpx;
-			border: none;
-		}
-		.use_time {
-			position: absolute;
-			left: 0;
-			bottom: 0;
-			font-size: 22rpx;
-			
+
+	.seletced_item1 {
+		box-sizing: border-box;
+		padding: 0 32rpx;
+
+		.coupons {
+			display: flex;
+			align-items: center;
+			height: 184rpx;
+			background: #fff;
+
+			border-radius: 24rpx;
+			box-shadow: 0 9rpx 14rpx 0 rgba(240, 240, 240, 0.44);
+			margin-top: 24rpx;
+
+			.price_box {
+				height: 136rpx;
+				width: 92rpx;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				margin-left: 44rpx;
+				color: #989898;
+
+				.money_mark {
+					font-size: 26rpx;
+
+				}
+
+				.num {
+					font-size: 62rpx;
+					font-weight: 700;
+
+				}
+
+				.coupon_name {
+					font-size: 26rpx;
+
+				}
+			}
+
+			.dashed_line {
+				height: 128rpx;
+				margin-left: 36rpx;
+				border-left: 1rpx dashed #989898;
+			}
+
+			.coupons_info {
+				position: relative;
+				width: 434rpx;
+				height: 92rpx;
+				margin-left: 36rpx;
+				color: #989898;
+
+				.activity {
+					position: absolute;
+					top: 0;
+					left: 0;
+					font-size: 32rpx;
+
+
+				}
+
+				.to_use {
+					position: absolute;
+					top: 0;
+					right: 0;
+					width: 148rpx;
+					height: 46rpx;
+					text-align: center;
+					line-height: 46rpx;
+					font-size: 28rpx;
+					// color: #fff;
+					background-color: #fff;
+					border-radius: 92rpx;
+					border: none;
+				}
+
+				.use_time {
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					font-size: 22rpx;
+
+				}
+			}
 		}
 	}
-	}
-}
 </style>

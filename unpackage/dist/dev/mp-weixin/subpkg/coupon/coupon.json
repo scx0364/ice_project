@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "优惠券",
   "enablePullDownRefresh": false,
+  "onReachBottomDistance": 150,
   "usingComponents": {
     "my-button": "../../components/my-button/my-button"
   }

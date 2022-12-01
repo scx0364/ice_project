@@ -1,4 +1,5 @@
-
+// 导入store实例对象：
+import store from './store'
 // 按需导入 $http 对象
 import { $http } from '@escook/request-miniprogram'
 // 在 uni-app 项目中，可以把 $http 挂载到 uni 顶级对象之上，方便全局调用
@@ -29,9 +30,9 @@ uni.$showMsg = function(title = '数据加载失败！',duration = 1500) {
 import Vue from 'vue'
 import App from './App'
 // 导入自定义的请求根路径
-import {sendRequest} from './utils/api.js'
+// import {sendRequest} from './utils/api.js'
 //全局挂载
-Vue.prototype.$sendRequest = sendRequest
+// Vue.prototype.$sendRequest = sendRequest
 Vue.config.productionTip = false
 
 App.mpType = 'app'
@@ -47,7 +48,7 @@ import { createSSRApp } from 'vue'
 import App from './App.vue'
 export function createApp() {
   const app = createSSRApp(App)
- 
+ app.use(store) // 导入store实例对象
   return {
     app
   }

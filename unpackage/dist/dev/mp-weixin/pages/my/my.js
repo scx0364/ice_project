@@ -1,12 +1,30 @@
 "use strict";
+var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __propIsEnum = Object.prototype.propertyIsEnumerable;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+var __spreadValues = (a, b) => {
+  for (var prop in b || (b = {}))
+    if (__hasOwnProp.call(b, prop))
+      __defNormalProp(a, prop, b[prop]);
+  if (__getOwnPropSymbols)
+    for (var prop of __getOwnPropSymbols(b)) {
+      if (__propIsEnum.call(b, prop))
+        __defNormalProp(a, prop, b[prop]);
+    }
+  return a;
+};
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 var common_vendor = require("../../common/vendor.js");
 var common_assets = require("../../common/assets.js");
 const _sfc_main = {
   data() {
     return {
-      token: JSON.parse(common_vendor.index.getStorageSync("token") || "0"),
       userInfo: {
-        avatar: "../../images/my/avatar.png",
+        avatar: "../../images/points/coco.png",
         nickname: "\u672A\u767B\u5F55"
       },
       flag: false,
@@ -16,14 +34,13 @@ const _sfc_main = {
       }
     };
   },
+  computed: __spreadValues({}, common_vendor.mapState(["token"])),
   onLoad() {
     if (this.token) {
       this.getUserMess();
     }
   },
-  methods: {
-    getphonenumber(e) {
-    },
+  methods: __spreadProps(__spreadValues({}, common_vendor.mapMutations(["updateToken"])), {
     getUserInfo(e) {
       this.flag = true;
       let that = this;
@@ -34,7 +51,6 @@ const _sfc_main = {
               icon: "none",
               title: "\u767B\u5F55\u5931\u8D25"
             });
-          console.log(1);
           const query = {
             encryptedData: encodeURIComponent(e.detail.encryptedData),
             iv: encodeURIComponent(e.detail.iv),
@@ -42,13 +58,11 @@ const _sfc_main = {
           };
           const res1 = common_vendor.index.$http.post("/demo/login", query);
           res1.then((data) => {
-            console.log(data.data);
             if (data.data.msg != "\u767B\u5F55\u6210\u529F") {
               common_vendor.index.$showMsg("\u767B\u5F55\u5931\u8D25\uFF01");
-              console.log(2);
               return;
             } else {
-              that.token = data.data.data.token;
+              that.updateToken(data.data.data.token);
               this.saveTokenToStorage(data.data.data.token);
               common_vendor.index.showToast({
                 icon: "none",
@@ -73,7 +87,7 @@ const _sfc_main = {
     },
     getUserMess() {
       common_vendor.index.request({
-        url: "/demo/user_info",
+        url: "http://192.168.121.56:8787/api/demo/user_info",
         method: "POST",
         header: {
           "content-type": "application/json",
@@ -88,7 +102,7 @@ const _sfc_main = {
       this.userInfo = info;
       this.times = times;
     }
-  }
+  })
 };
 if (!Array) {
   const _easycom_uni_icons2 = common_vendor.resolveComponent("uni-icons");
@@ -115,8 +129,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     j: common_assets._imports_4,
     k: common_assets._imports_5,
     l: common_vendor.o((...args) => $options.getUserInfo && $options.getUserInfo(...args)),
-    m: !$data.token
+    m: !_ctx.token
   };
 }
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/\u53F2\u5F69\u971Eweb/web/ice_porject/pages/my/my.vue"]]);
+var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/ice_project/pages/my/my.vue"]]);
 wx.createPage(MiniProgramPage);

@@ -1,5 +1,8 @@
 /* 水平间距 */
 /* 水平间距 */
+.container {
+  padding-bottom: 150rpx;
+}
 .tab_nav {
   height: 94rpx;
   display: flex;
@@ -34,7 +37,7 @@
   height: 184rpx;
   background: linear-gradient(105deg, #fee6b8, #f8d998 100%);
   border: 2rpx solid #b38d57;
-  border-radius: 24px;
+  border-radius: 24rpx;
   box-shadow: 0 9rpx 14rpx 0 rgba(254, 230, 183, 0.44);
   margin-top: 24rpx;
 }
@@ -105,7 +108,7 @@
   align-items: center;
   height: 184rpx;
   background: #fff;
-  border-radius: 24px;
+  border-radius: 24rpx;
   box-shadow: 0 9rpx 14rpx 0 rgba(240, 240, 240, 0.44);
   margin-top: 24rpx;
 }
