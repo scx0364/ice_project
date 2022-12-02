@@ -22,7 +22,7 @@
                 {
                     "navigationBarTitleText": "优惠券",
                     "enablePullDownRefresh": false,
-					"onReachBottomDistance": 150
+					"onReachBottomDistance": 50
                 }
                 
                 }

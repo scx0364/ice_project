@@ -1,5 +1,7 @@
 "use strict";
 var __defProp = Object.defineProperty;
+var __defProps = Object.defineProperties;
+var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
 var __getOwnPropSymbols = Object.getOwnPropertySymbols;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
 var __propIsEnum = Object.prototype.propertyIsEnumerable;
@@ -15,6 +17,7 @@ var __spreadValues = (a, b) => {
     }
   return a;
 };
+var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
 var common_vendor = require("../../common/vendor.js");
 const _sfc_main = {
   data() {
@@ -40,9 +43,9 @@ const _sfc_main = {
         limit: 6,
         pages: 1
       },
+      coupons0: [],
       coupons1: [],
       coupons2: [],
-      coupons3: [],
       total: 0,
       isLoading: false
     };
@@ -51,10 +54,24 @@ const _sfc_main = {
     this.getCouponList(this.active);
   },
   computed: __spreadValues({}, common_vendor.mapState(["token"])),
-  methods: {
-    checked(i) {
+  methods: __spreadProps(__spreadValues({}, common_vendor.mapMutations(["updateData"])), {
+    checked(i, $event) {
+      console.log($event.currentTarget.dataset.num);
+      console.log(i);
       this.active = i;
-      this.coupons1 = [], this.coupons2 = [], this.coupons3 = [], this.total = 0;
+      this.reqObj.pages = 1;
+      switch (i) {
+        case 0:
+          if (this.coupons0.length != 0) {
+            return;
+          }
+        case 1:
+          if (this.coupons1.length != 0)
+            return;
+        case 2:
+          if (this.coupons2.length != 0)
+            return;
+      }
       this.getCouponList(i);
     },
     getCouponList(i) {
@@ -62,7 +79,7 @@ const _sfc_main = {
       this.reqObj.status = i + 1;
       this.isLoading = true;
       common_vendor.index.request({
-        url: "http://192.168.121.56:8787/api/demo/list",
+        url: "http://192.168.1.9:8787/api/demo/list",
         method: "POST",
         data: this.reqObj,
         header: {
@@ -74,17 +91,15 @@ const _sfc_main = {
             common_vendor.index.$showMsg("\u6570\u636E\u8BF7\u6C42\u5931\u8D25\uFF01");
             return;
           }
-          that.coupons1 = [...that.coupons1, ...res.data.data.data.filter((x) => x.status == 1)];
-          that.coupons2 = [...that.coupons2, ...res.data.data.data.filter((x) => x.status == 2)];
-          that.coupons3 = [...that.coupons3, ...res.data.data.data.filter((x) => x.status == 3)];
+          that.coupons0 = [...that.coupons0, ...res.data.data.data.filter((x) => x.status == 1)];
+          that.coupons1 = [...that.coupons1, ...res.data.data.data.filter((x) => x.status == 2)];
+          that.coupons2 = [...that.coupons2, ...res.data.data.data.filter((x) => x.status == 3)];
           that.total = res.data.data.total;
         }
       });
     }
-  },
+  }),
   onReachBottom() {
-    console.log(this.total);
-    console.log(this.reqObj.pages);
     if (this.reqObj.limit * this.reqObj.pages >= this.total) {
       common_vendor.index.$showMsg("\u6570\u636E\u52A0\u8F7D\u5B8C\u6BD5\uFF01");
       return;
@@ -108,14 +123,17 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     a: common_vendor.f($data.navList, (item, i, i0) => {
       return {
         a: common_vendor.t(item.title),
-        b: common_vendor.o(($event) => $options.checked(i)),
-        c: common_vendor.n(i == $data.active ? "active" : ""),
-        d: i
+        b: common_vendor.o(($event) => $options.checked(i, $event)),
+        c: i,
+        d: common_vendor.n(i == $data.active ? "active" : ""),
+        e: i,
+        f: i,
+        g: common_vendor.o((...args) => _ctx.tab && _ctx.tab(...args), i)
       };
     }),
     b: $data.active == 0
   }, $data.active == 0 ? {
-    c: common_vendor.f($data.coupons1, (item, i, i0) => {
+    c: common_vendor.f($data.coupons0, (item, i, i0) => {
       return {
         a: common_vendor.t(item.money),
         b: i
@@ -124,7 +142,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   } : {}, {
     d: $data.active == 1
   }, $data.active == 1 ? {
-    e: common_vendor.f($data.coupons2, (item2, i, i0) => {
+    e: common_vendor.f($data.coupons1, (item2, i, i0) => {
       return {
         a: common_vendor.t(item2.money),
         b: i
@@ -133,7 +151,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   } : {}, {
     f: $data.active == 2
   }, $data.active == 2 ? {
-    g: common_vendor.f($data.coupons3, (item3, i, i0) => {
+    g: common_vendor.f($data.coupons2, (item3, i, i0) => {
       return {
         a: common_vendor.t(item3.money),
         b: i

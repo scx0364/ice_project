@@ -5,7 +5,9 @@ const store = createStore({
 	state:{//存放状态
 		
 		// token:''
-		token: JSON.parse(uni.getStorageSync('token') || '0')
+		token: JSON.parse(uni.getStorageSync('token') || '0'),
+		// 自定义属性
+		num :0
 
 	},
 	getters:{
@@ -14,7 +16,11 @@ const store = createStore({
 		// 更新token值
 		updateToken(state,token) {
 			state.token = token
-		}
+		},
+		// 更新自定义属性值
+		updateData(state,num) {
+			state.num = num
+		} 
 },
 	actions:{
 }

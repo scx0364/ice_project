@@ -4,8 +4,8 @@
 	
 	<view class="tab_nav">
 		<!-- tab栏 -->
-		<view :class="['nav',i==active? 'active':'']" v-for="(item,i) in navList" :key="i">
-			<view class="nav_title" @click="checked(i)">
+		<view :class="['nav',i==active? 'active':'']" v-for="(item,i) in navList" :key="i" :data-num="i" @click="tab">
+			<view class="nav_title" @click="checked(i,$event)" :data-num="i">
 				{{item.title}}
 			</view>
 
@@ -13,9 +13,9 @@
 
 	</view>
 	<!-- 优惠券区域 -->
-	<view class="seletced_item0" v-if="active == 0">
+	<view class="seletced_item0" v-if="active == 0" >
 		<!-- 优惠券 -->
-		<view class="coupons" v-for="(item,i) in coupons1" :key="i">
+		<view class="coupons" v-for="(item,i) in coupons0" :key="i">
 			<!-- 左侧金额 -->
 			<view class="price_box">
 				<view class="price">
@@ -36,7 +36,7 @@
 			</view>
 		</view>
 	</view>
-	<view class="seletced_item1" v-if="active == 1" v-for="(item2,i) in coupons2" :key="i">
+	<view class="seletced_item1" v-if="active == 1" v-for="(item2,i) in coupons1" :key="i" >
 		<!-- 优惠券 -->
 		<view class="coupons">
 			<!-- 左侧金额 -->
@@ -60,7 +60,7 @@
 		</view>
 
 	</view>
-	<view class="seletced_item1" v-if="active == 2" v-for="(item3,i) in coupons3" :key="i">
+	<view class="seletced_item1" v-if="active == 2" v-for="(item3,i) in coupons2" :key="i" >
 		<!-- 优惠券 -->
 		<view class="coupons" >
 			<!-- 左侧金额 -->
@@ -90,7 +90,7 @@
 
 <script>
 	import {
-		mapState
+		mapState,mapMutations
 	} from 'vuex'
 	export default {
 		data() {
@@ -117,9 +117,9 @@
 					pages: 1 // 当前的页码
 				},
 				// 优惠券列表
-				coupons1: [],
+				coupons0: [],
+				coupons1:[],
 				coupons2:[],
-				coupons3:[],
 				// 优惠券总数
 				total: 0,
 				// 定义节流阀，防止重复请求
@@ -134,16 +134,57 @@
 			...mapState(['token'])
 		},
 		methods: {
-			checked(i) {
+			...mapMutations(['updateData']),
+			// tab(e) {
+			// 	console.log(e.target.dataset.num)
+			// },
+			checked(i,$event) {
+				console.log($event.currentTarget.dataset.num)
+				console.log(i)
+				this.active = i
+				this.reqObj.pages = 1
+				// this.total = 0
+				// console.log(this.active)
+				// console.log(i)	
+				// console.log(this.coupons0.length)
+				// console.log(this.coupons1.length)
+				// // console.log(this.coupons2)
+				// if($event.currentTarget.dataset.num == 0) {
+				// 	this.coupons0 = []
+				// } else if($event.currentTarget.dataset.num == 1) {
+				// 	this.coupons1 = []
+				// } else {
+				// 	this.coupons2 = []
+				// }
+				switch(i) {
+					case 0:
+						// this.coupons0 = []
+						if(this.coupons0.length != 0) {
+							return
+						} 
+						
+					case 1:
+					
+						if(this.coupons1.length != 0) return
+					case 2:
+						if(this.coupons2.length != 0) return
+						
+				}
+				// console.log(this.a)
+				// console.log(this.coupons0)
+				// 判断coupons是否为空
+		
 				// if(this.active == i) return
 				// let that = this
 				// 1.让active和当前的index相等
-				this.active = i
-				// 多次触发，触发之前重置coupons和total值 
-				this.coupons1 = [],
-				this.coupons2 = [],
-				this.coupons3 = [],
-				this.total = 0
+				
+				// 多次触发，触发之前重置coupons和total值
+				
+				// console.log(this.a)
+				
+				// this.coupons1 = [],
+				// this.coupons2 = [],
+				// this.total = 0
 				// 请求数据
 				this.getCouponList(i)
 				// 2.让status与当前的状态对应：status=index + 1
@@ -203,7 +244,7 @@
 			// console.log(typeof(this.coupons))
 			
 			uni.request({
-				url: 'http://192.168.121.56:8787/api/demo/list',
+				url: 'http://192.168.1.9:8787/api/demo/list',
 				method: 'POST',
 				data: this.reqObj,
 				header: {
@@ -221,10 +262,11 @@
 			
 						return
 					}
+					
 					// 请求成功，更新优惠券列表,将新旧数据拼接，防止覆盖
-					that.coupons1 = [...that.coupons1,...res.data.data.data.filter(x => x.status == 1)]
-					that.coupons2 = [...that.coupons2,...res.data.data.data.filter(x => x.status == 2)]
-					that.coupons3 = [...that.coupons3,...res.data.data.data.filter(x => x.status == 3)]
+					that.coupons0 = [...that.coupons0,...res.data.data.data.filter(x => x.status == 1)]
+					that.coupons1 = [...that.coupons1,...res.data.data.data.filter(x => x.status == 2)]
+					that.coupons2 = [...that.coupons2,...res.data.data.data.filter(x => x.status == 3)]
 					// console.log()
 					// 更新优惠券总数
 					that.total = res.data.data.total
@@ -237,8 +279,8 @@
 		},
 		// 触底刷新
 		onReachBottom() {
-			console.log(this.total)
-			console.log(this.reqObj.pages)
+			// console.log(this.total)
+			// console.log(this.reqObj.pages)
 			// console.log(this.total)
 			// 判断是否还有数据
 			if (this.reqObj.limit * this.reqObj.pages >= this.total) {
