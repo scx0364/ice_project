@@ -34,13 +34,13 @@ const _sfc_main = {
       }
     };
   },
-  computed: __spreadValues({}, common_vendor.mapState(["token"])),
+  computed: __spreadValues({}, common_vendor.mapState(["token", "redirectInfo"])),
   onLoad() {
     if (this.token) {
       this.getUserMess();
     }
   },
-  methods: __spreadProps(__spreadValues({}, common_vendor.mapMutations(["updateToken"])), {
+  methods: __spreadProps(__spreadValues(__spreadValues({}, common_vendor.mapMutations(["updateToken", "updateRedirectInfo"])), common_vendor.mapActions(["naveToLogin"])), {
     getUserInfo(e) {
       this.flag = true;
       let that = this;
@@ -68,6 +68,15 @@ const _sfc_main = {
                 icon: "none",
                 title: "\u767B\u5F55\u6210\u529F\uFF01"
               });
+              console.log(this.redirectInfo);
+              if (this.redirectInfo && this.redirectInfo.openType == "navigateTo") {
+                common_vendor.index.navigateTo({
+                  url: this.redirectInfo.from,
+                  complete: () => {
+                    this.updateRedirectInfo(null);
+                  }
+                });
+              }
               this.reLoadPages();
             }
           });
@@ -101,6 +110,17 @@ const _sfc_main = {
     renewUserInfo(info, times) {
       this.userInfo = info;
       this.times = times;
+    },
+    goToCoupon() {
+      this.naveToLogin({
+        openType: "navigateTo",
+        from: "/pages/my/my"
+      });
+      if (this.token == "0")
+        return common_vendor.index.$showMsg("\u8BF7\u5148\u767B\u5F55\uFF01");
+      common_vendor.index.navigateTo({
+        url: "/subpkg/coupon/coupon"
+      });
     }
   })
 };
@@ -125,12 +145,13 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     f: common_vendor.t($data.times.jifen),
     g: common_assets._imports_1,
     h: common_assets._imports_2,
-    i: common_assets._imports_3,
-    j: common_assets._imports_4,
-    k: common_assets._imports_5,
-    l: common_vendor.o((...args) => $options.getUserInfo && $options.getUserInfo(...args)),
-    m: !_ctx.token
+    i: common_vendor.o((...args) => $options.goToCoupon && $options.goToCoupon(...args)),
+    j: common_assets._imports_3,
+    k: common_assets._imports_4,
+    l: common_assets._imports_5,
+    m: common_vendor.o((...args) => $options.getUserInfo && $options.getUserInfo(...args)),
+    n: !_ctx.token
   };
 }
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/ice_project/pages/my/my.vue"]]);
+var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/\u53F2\u5F69\u971Eweb/web/ice_porject/pages/my/my.vue"]]);
 wx.createPage(MiniProgramPage);

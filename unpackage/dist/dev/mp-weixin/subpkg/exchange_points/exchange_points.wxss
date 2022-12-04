@@ -80,3 +80,72 @@
   line-height: 28rpx;
   color: #fff;
 }
+.points_container .welfare_box .list_box {
+  width: 100%;
+  background-color: #fff;
+  box-sizing: border-box;
+  padding: 28rpx 24rpx;
+  margin-top: 28rpx;
+  border-radius: 24rpx;
+}
+.points_container .welfare_box .list_box .list_title {
+  font-size: 34rpx;
+}
+.points_container .welfare_box .list_box .list_item {
+  width: 100%;
+  display: flex;
+  margin-top: 32rpx;
+}
+.points_container .welfare_box .list_box .list_item:nth-child(1) {
+  margin-top: 24rpx;
+}
+.points_container .welfare_box .list_box .list_item .item_money {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 128rpx;
+  height: 114rpx;
+  background: linear-gradient(90deg, #ff7249, #ffa68b 100%);
+  border-radius: 12rpx;
+}
+.points_container .welfare_box .list_box .list_item .item_money .money_box {
+  width: 48rpx;
+  height: 67rpx;
+}
+.points_container .welfare_box .list_box .list_item .item_money .money_box .money_mark {
+  font-size: 28rpx;
+  color: #8B5121;
+}
+.points_container .welfare_box .list_box .list_item .item_money .money_box .money_count {
+  font-size: 36rpx;
+  color: #8B5121;
+  font-weight: 700;
+}
+.points_container .welfare_box .list_box .list_item .item_money .item_name {
+  font-size: 24rpx;
+  color: #A98854;
+}
+.points_container .welfare_box .list_box .list_item .item_info {
+  position: relative;
+}
+.points_container .welfare_box .list_box .list_item .item_info .item_price {
+  font-size: 28rpx;
+}
+.points_container .welfare_box .list_box .list_item .item_info .able_time {
+  position: absolute;
+  top: 43rpx;
+  font-size: 24rpx;
+  color: #939393;
+}
+.points_container .welfare_box .list_box .list_item .item_info .item_price {
+  font-size: 24rpx;
+  color: #FF9900;
+  font-weight: 700;
+}
+.points_container .welfare_box .list_box .list_item .item_info .item_price::before {
+  content: "";
+  display: block;
+  width: 44rpx;
+  height: 44rpx;
+  background: url(../../images/points/money.png);
+}

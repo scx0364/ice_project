@@ -62,13 +62,19 @@ const _sfc_main = {
       this.reqObj.pages = 1;
       switch (i) {
         case 0:
+          this.coupons1 = [];
+          this.coupons2 = [];
           if (this.coupons0.length != 0) {
             return;
           }
         case 1:
+          this.coupons0 = [];
+          this.coupons2 = [];
           if (this.coupons1.length != 0)
             return;
         case 2:
+          this.coupons1 = [];
+          this.coupons0 = [];
           if (this.coupons2.length != 0)
             return;
       }
@@ -126,9 +132,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         b: common_vendor.o(($event) => $options.checked(i, $event)),
         c: i,
         d: common_vendor.n(i == $data.active ? "active" : ""),
-        e: i,
-        f: i,
-        g: common_vendor.o((...args) => _ctx.tab && _ctx.tab(...args), i)
+        e: i
       };
     }),
     b: $data.active == 0
@@ -165,5 +169,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/ice_project/subpkg/coupon/coupon.vue"]]);
+var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/\u53F2\u5F69\u971Eweb/web/ice_porject/subpkg/coupon/coupon.vue"]]);
 wx.createPage(MiniProgramPage);

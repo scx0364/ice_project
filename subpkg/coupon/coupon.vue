@@ -4,7 +4,7 @@
 	
 	<view class="tab_nav">
 		<!-- tab栏 -->
-		<view :class="['nav',i==active? 'active':'']" v-for="(item,i) in navList" :key="i" :data-num="i" @click="tab">
+		<view :class="['nav',i==active? 'active':'']" v-for="(item,i) in navList" :key="i" >
 			<view class="nav_title" @click="checked(i,$event)" :data-num="i">
 				{{item.title}}
 			</view>
@@ -135,98 +135,35 @@
 		},
 		methods: {
 			...mapMutations(['updateData']),
-			// tab(e) {
-			// 	console.log(e.target.dataset.num)
-			// },
+	
 			checked(i,$event) {
 				console.log($event.currentTarget.dataset.num)
 				console.log(i)
 				this.active = i
 				this.reqObj.pages = 1
-				// this.total = 0
-				// console.log(this.active)
-				// console.log(i)	
-				// console.log(this.coupons0.length)
-				// console.log(this.coupons1.length)
-				// // console.log(this.coupons2)
-				// if($event.currentTarget.dataset.num == 0) {
-				// 	this.coupons0 = []
-				// } else if($event.currentTarget.dataset.num == 1) {
-				// 	this.coupons1 = []
-				// } else {
-				// 	this.coupons2 = []
-				// }
+        
 				switch(i) {
 					case 0:
-						// this.coupons0 = []
+						// 点击当前的标题，让另外两个标题下的数据清空
+            this.coupons1 = []
+            this.coupons2 = []
+            // 如果在当前标题下重复点击标题，判断是否有数据，如果有就直接return，从而避免重复请求数据，导致数据无限叠加
 						if(this.coupons0.length != 0) {
 							return
-						} 
-						
+						} 	
 					case 1:
-					
+            this.coupons0 = []
+            this.coupons2 = []
 						if(this.coupons1.length != 0) return
 					case 2:
+            this.coupons1 = []
+            this.coupons0 = []
 						if(this.coupons2.length != 0) return
 						
 				}
-				// console.log(this.a)
-				// console.log(this.coupons0)
-				// 判断coupons是否为空
-		
-				// if(this.active == i) return
-				// let that = this
-				// 1.让active和当前的index相等
-				
-				// 多次触发，触发之前重置coupons和total值
-				
-				// console.log(this.a)
-				
-				// this.coupons1 = [],
-				// this.coupons2 = [],
-				// this.total = 0
 				// 请求数据
 				this.getCouponList(i)
-				// 2.让status与当前的状态对应：status=index + 1
-			// 	this.reqObj.status = i + 1
-			// 	// 多次触发，触发之前重置coupons和total值
-
-			// 	// 3.发起请求，获取优惠券列表信息
-			// 	// 开始请求，打开节流阀
-			// 	this.isLoading = true
-			// 	// console.log(typeof(this.coupons))
-
-			// 	uni.request({
-			// 		url: 'http://192.168.121.56:8787/api/demo/list',
-			// 		method: 'POST',
-			// 		data: this.reqObj,
-			// 		header: {
-						
-			// 			'token': this.token
-
-			// 		},
-			// 		success: (res) => {
-			
-			// 			// 请求完成，关闭节流阀
-			// 			that.isLoading = false
-			// 			// 判断请求是否失败
-			// 			if (res.errMsg != 'request:ok') {
-			// 				uni.$showMsg('数据请求失败！')
-
-			// 				return
-			// 			}
-			// 			// 请求成功，更新优惠券列表,将新旧数据拼接，防止覆盖
-			// 			that.coupons1 = [...that.coupons1,...res.data.data.data.filter(x => x.status == 1)]
-			// 			that.coupons2 = [...that.coupons2,...res.data.data.data.filter(x => x.status == 2)]
-			// 			that.coupons3 = [...that.coupons3,...res.data.data.data.filter(x => x.status == 3)]
-			// 			console.log()
-			// 			// 更新优惠券总数
-			// 			that.total = res.data.data.total
-			// 			console.log(that.total)
-
-			// 		}
-			// 	})
-
+				
 			},
 			
 			
@@ -235,14 +172,12 @@
 		// 请求数据的方法
 		getCouponList(i) {
 			let that = this
+      // 状态为当前的索引号+1
 			this.reqObj.status = i + 1
-			// 多次触发，触发之前重置coupons和total值
 			
-			// 3.发起请求，获取优惠券列表信息
+			// 发起请求，获取优惠券列表信息
 			// 开始请求，打开节流阀
 			this.isLoading = true
-			// console.log(typeof(this.coupons))
-			
 			uni.request({
 				url: 'http://192.168.1.9:8787/api/demo/list',
 				method: 'POST',
@@ -267,10 +202,8 @@
 					that.coupons0 = [...that.coupons0,...res.data.data.data.filter(x => x.status == 1)]
 					that.coupons1 = [...that.coupons1,...res.data.data.data.filter(x => x.status == 2)]
 					that.coupons2 = [...that.coupons2,...res.data.data.data.filter(x => x.status == 3)]
-					// console.log()
 					// 更新优惠券总数
 					that.total = res.data.data.total
-					// console.log(that.total)
 			
 				}
 			})
@@ -279,10 +212,7 @@
 		},
 		// 触底刷新
 		onReachBottom() {
-			// console.log(this.total)
-			// console.log(this.reqObj.pages)
-			// console.log(this.total)
-			// 判断是否还有数据
+			// 判断是否还有下一页数据
 			if (this.reqObj.limit * this.reqObj.pages >= this.total) {
 				uni.$showMsg('数据加载完毕！')
 				return
@@ -292,9 +222,7 @@
 			// 判断是否有请求正在执行
 			if (this.isLoading) return
 			// 如果没有请求正在执行，则请求下一页数据,选中项不变
-			// this.checked(this.active)
 			this.getCouponList(this.active)
-			// console.log(this.total)
 		}
 		
 	}

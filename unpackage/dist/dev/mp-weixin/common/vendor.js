@@ -6710,6 +6710,31 @@ var mapMutations = normalizeNamespace(function(namespace, mutations) {
   });
   return res;
 });
+var mapActions = normalizeNamespace(function(namespace, actions) {
+  var res = {};
+  if (!isValidMap(actions)) {
+    console.error("[vuex] mapActions: mapper parameter must be either an Array or an Object");
+  }
+  normalizeMap(actions).forEach(function(ref2) {
+    var key = ref2.key;
+    var val = ref2.val;
+    res[key] = function mappedAction() {
+      var args = [], len = arguments.length;
+      while (len--)
+        args[len] = arguments[len];
+      var dispatch2 = this.$store.dispatch;
+      if (namespace) {
+        var module = getModuleByNamespace(this.$store, "mapActions", namespace);
+        if (!module) {
+          return;
+        }
+        dispatch2 = module.context.dispatch;
+      }
+      return typeof val === "function" ? val.apply(this, [dispatch2].concat(args)) : dispatch2.apply(this.$store, [val].concat(args));
+    };
+  });
+  return res;
+});
 function normalizeMap(map) {
   if (!isValidMap(map)) {
     return [];
@@ -6809,6 +6834,7 @@ exports.createStore = createStore;
 exports.e = e;
 exports.f = f;
 exports.index = index;
+exports.mapActions = mapActions;
 exports.mapMutations = mapMutations;
 exports.mapState = mapState;
 exports.n = n;

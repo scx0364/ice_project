@@ -45,7 +45,7 @@
             <image src="../../images/my/ice.png" mode=""></image>
             <text>取冰记录</text>
           </view>
-          <view class="cate_item">
+          <view class="cate_item" @click="goToCoupon">
             <image src="../../images/my/youhuiquan.png" mode=""></image>
             <text>优惠券</text>
           </view>
@@ -74,16 +74,18 @@
 </template>
 
 <script>
-	import {mapState,mapMutations} from 'vuex'
+  import {
+    mapState,
+    mapMutations,
+    mapActions
+  } from 'vuex'
   export default {
     data() {
       return {
-        // token:''
-        // token: JSON.parse(uni.getStorageSync('token') || '0'),
-        // userInfo:{}
+      
         userInfo: {
           avatar: "../../images/points/coco.png",
-          // avatar: "E:\ice_project\images\my/avatar.png",
+          
           nickname: "未登录"
         },
 
@@ -94,20 +96,26 @@
         }
       };
     },
-	computed:{
-		...mapState(['token'])
-	},
+    computed: {
+      ...mapState(['token','redirectInfo'])
+      // ...mapState({
+      //   token:state => state.index.token,
+      //   redirectInfo:state => state.index.
+      // })
+    },
     onLoad() {
       // 如果用户已经登录了，页面加载时请求用户信息，渲染头像昵称
       if (this.token) {
         this.getUserMess()
 
       }
-	  // console.log(this.token)
+     
     },
     methods: {
-		// 引入index.js中更新token的方法
-		...mapMutations(['updateToken']),
+      // 引入index.js中更新token的方法
+      ...mapMutations(['updateToken','updateRedirectInfo']),
+      // 引入index.js中的倒计时跳转方法
+      ...mapActions(['naveToLogin']),
       getUserInfo(e) {
         this.flag = true
         // console.log(e.detail)
@@ -146,17 +154,30 @@
                 return
               } else {
                 // 更新token的值
-				
-				that.updateToken(data.data.data.token)
-                
-				// console.log(that.token)
+
+                that.updateToken(data.data.data.token)
+
+                // console.log(that.token)
                 this.saveTokenToStorage(data.data.data.token)
                 uni.showToast({
                   icon: 'none',
                   title: '登录成功！'
                 })
+                
+                // 判断重定向信息对象是否为空，如果不为空，则导航回原来的页面
+                console.log(this.redirectInfo)
+                if(this.redirectInfo && this.redirectInfo.openType == 'navigateTo' ) {
+                  uni.navigateTo({
+                    url:this.redirectInfo.from,
+                    // 导航成功之后，将redirectInfo重置为空
+                    complete: () => {
+                      this.updateRedirectInfo(null)
+                    }
+                  })
+                }
                 // 页面重载
                 this.reLoadPages()
+                
               }
 
 
@@ -186,7 +207,7 @@
       },
       // 请求用户信息
       getUserMess() {
-		  // console.log(this.token)
+        // console.log(this.token)
         uni.request({
           url: 'http://192.168.121.56:8787/api/demo/user_info',
           method: 'POST',
@@ -203,24 +224,7 @@
             // 更新取冰次数
           },
         })
-        // 调用封装的请求方法进行数据请求
-        // uni.$sendRequest({
-        //   url:'/demo/user_info',
-        //   method:'POST',
-        //   header: {
-        //   	'content-type':  'application/json',
-        //   	'token':this.token
-        //   },
-        //   // 返回用户信息，头像昵称
-        //   success:(res2) => {
-        //   	// console.log(res2.data.data)
-        //   	// 更新用户信息
-        //   	this.renewUserInfo(res2.data.data.user_info,res2.data.data)
-        //   	// 将用户信息储存在本地
-        //   	// 更新取冰次数
-        //   }
-        // })
-
+        
       },
       //更新用户信息
       renewUserInfo(info, times) {
@@ -229,7 +233,19 @@
         // 将用户信息储存在本地
         // this.saveUserinfoToStorage(this.userInfo)
       },
-
+      // 点击优惠券，跳转到优惠券页面
+      goToCoupon() {
+        // 这是用来测试的，之后在哪个页面需要判断登录就在哪个页面调用
+        this.naveToLogin({
+          openType: 'navigateTo',
+          from: '/pages/my/my'
+        })
+        // 判断是否登录
+        if (this.token == '0') return uni.$showMsg('请先登录！')
+        uni.navigateTo({
+          url: '/subpkg/coupon/coupon'
+        })
+      }
 
     }
   }

@@ -9,7 +9,7 @@
             "list": [
                 {
                     "name": "",
-                    "pathName": "subpkg/coupon/coupon",
+                    "pathName": "subpkg/exchange_points/exchange_points",
                     "query": "",
                     "launchMode": "default",
                     "scene": null
