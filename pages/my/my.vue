@@ -209,7 +209,7 @@
       getUserMess() {
         // console.log(this.token)
         uni.request({
-          url: 'http://192.168.121.56:8787/api/demo/user_info',
+          url: 'http://192.168.1.9:8787/api/demo/user_info',
           method: 'POST',
           header: {
             'content-type': 'application/json',
@@ -236,10 +236,10 @@
       // 点击优惠券，跳转到优惠券页面
       goToCoupon() {
         // 这是用来测试的，之后在哪个页面需要判断登录就在哪个页面调用
-        this.naveToLogin({
-          openType: 'navigateTo',
-          from: '/pages/my/my'
-        })
+        // this.naveToLogin({
+        //   openType: 'navigateTo',
+        //   from: '/pages/my/my'
+        // })
         // 判断是否登录
         if (this.token == '0') return uni.$showMsg('请先登录！')
         uni.navigateTo({

@@ -51,20 +51,24 @@ const _sfc_main = {
     };
   },
   onLoad() {
-    this.getCouponList(this.active);
+    if (this.token == "0") {
+      this.naveToLogin({
+        openType: "navigateTo",
+        from: "/subpkg/coupon/coupon"
+      });
+    }
+    this.getCouponList(0);
   },
   computed: __spreadValues({}, common_vendor.mapState(["token"])),
-  methods: __spreadProps(__spreadValues({}, common_vendor.mapMutations(["updateData"])), {
+  methods: __spreadProps(__spreadValues(__spreadValues({}, common_vendor.mapMutations(["updateData"])), common_vendor.mapActions(["naveToLogin"])), {
     checked(i, $event) {
-      console.log($event.currentTarget.dataset.num);
-      console.log(i);
       this.active = i;
-      this.reqObj.pages = 1;
       switch (i) {
         case 0:
           this.coupons1 = [];
           this.coupons2 = [];
           if (this.coupons0.length != 0) {
+            console.log(123);
             return;
           }
         case 1:
@@ -78,6 +82,7 @@ const _sfc_main = {
           if (this.coupons2.length != 0)
             return;
       }
+      this.reqObj.pages = 1;
       this.getCouponList(i);
     },
     getCouponList(i) {
@@ -97,11 +102,29 @@ const _sfc_main = {
             common_vendor.index.$showMsg("\u6570\u636E\u8BF7\u6C42\u5931\u8D25\uFF01");
             return;
           }
+          res.data.data.data.forEach((item, index) => {
+            item.createtime = this.timeHandler(item.createtime);
+            item.to_time = this.timeHandler(item.to_time);
+          });
           that.coupons0 = [...that.coupons0, ...res.data.data.data.filter((x) => x.status == 1)];
           that.coupons1 = [...that.coupons1, ...res.data.data.data.filter((x) => x.status == 2)];
           that.coupons2 = [...that.coupons2, ...res.data.data.data.filter((x) => x.status == 3)];
           that.total = res.data.data.total;
         }
+      });
+    },
+    timeHandler(time) {
+      let alltime = new Date(time);
+      let year = alltime.getFullYear();
+      let month = alltime.getMonth() + 1;
+      let day = alltime.getDay();
+      let hmonth = month < 10 ? "0" + month : month;
+      let hday = day < 10 ? "0" + day : day;
+      return year + "." + hmonth + "." + hday;
+    },
+    gotoExchange() {
+      common_vendor.index.navigateTo({
+        url: "/subpkg/exchange_points/exchange_points"
       });
     }
   }),
@@ -113,6 +136,7 @@ const _sfc_main = {
     this.reqObj.pages += 1;
     if (this.isLoading)
       return;
+    common_vendor.index.$showMsg("\u6570\u636E\u52A0\u8F7D\u4E2D");
     this.getCouponList(this.active);
   }
 };
@@ -140,7 +164,9 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     c: common_vendor.f($data.coupons0, (item, i, i0) => {
       return {
         a: common_vendor.t(item.money),
-        b: i
+        b: common_vendor.t(item.createtime),
+        c: common_vendor.t(item.to_time),
+        d: i
       };
     })
   } : {}, {
@@ -149,7 +175,9 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     e: common_vendor.f($data.coupons1, (item2, i, i0) => {
       return {
         a: common_vendor.t(item2.money),
-        b: i
+        b: common_vendor.t(item2.createtime),
+        c: common_vendor.t(item2.to_time),
+        d: i
       };
     })
   } : {}, {
@@ -158,16 +186,19 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     g: common_vendor.f($data.coupons2, (item3, i, i0) => {
       return {
         a: common_vendor.t(item3.money),
-        b: i
+        b: common_vendor.t(item3.createtime),
+        c: common_vendor.t(item3.to_time),
+        d: i
       };
     })
   } : {}, {
     h: $data.active == 0
   }, $data.active == 0 ? {
-    i: common_vendor.p({
+    i: common_vendor.o($options.gotoExchange),
+    j: common_vendor.p({
       text: $data.text
     })
   } : {});
 }
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/\u53F2\u5F69\u971Eweb/web/ice_porject/subpkg/coupon/coupon.vue"]]);
+var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/ice_project/subpkg/coupon/coupon.vue"]]);
 wx.createPage(MiniProgramPage);

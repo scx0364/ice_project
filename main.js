@@ -5,7 +5,7 @@ import { $http } from '@escook/request-miniprogram'
 // 在 uni-app 项目中，可以把 $http 挂载到 uni 顶级对象之上，方便全局调用
 uni.$http = $http
 // 配置请求根路径
-$http.baseUrl = 'http://192.168.121.56:8787/api'
+$http.baseUrl = 'http://192.168.1.9:8787/api'
 // 请求拦截器
 // 请求开始之前做一些事情
 $http.beforeRequest = function (options) {

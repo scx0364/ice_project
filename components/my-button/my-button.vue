@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<button  class="btn" >{{text}}</button>
+		<button  class="btn" @click="myevent">{{text}}</button>
 	</view>
 </template>
 
@@ -14,9 +14,16 @@
 					default:''
 			}
 		},
+		emits:['myevent'],
 		data() {
 			return {
 				
+		}
+		
+	},
+	methods:{
+		myevent() {
+			this.$emit('myevent')
 		}
 	}
 	}

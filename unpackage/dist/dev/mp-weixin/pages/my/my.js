@@ -96,7 +96,7 @@ const _sfc_main = {
     },
     getUserMess() {
       common_vendor.index.request({
-        url: "http://192.168.121.56:8787/api/demo/user_info",
+        url: "http://192.168.1.9:8787/api/demo/user_info",
         method: "POST",
         header: {
           "content-type": "application/json",
@@ -112,10 +112,6 @@ const _sfc_main = {
       this.times = times;
     },
     goToCoupon() {
-      this.naveToLogin({
-        openType: "navigateTo",
-        from: "/pages/my/my"
-      });
       if (this.token == "0")
         return common_vendor.index.$showMsg("\u8BF7\u5148\u767B\u5F55\uFF01");
       common_vendor.index.navigateTo({
@@ -153,5 +149,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     n: !_ctx.token
   };
 }
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/\u53F2\u5F69\u971Eweb/web/ice_porject/pages/my/my.vue"]]);
+var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/ice_project/pages/my/my.vue"]]);
 wx.createPage(MiniProgramPage);
