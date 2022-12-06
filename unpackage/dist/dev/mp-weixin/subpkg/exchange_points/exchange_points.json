@@ -2,6 +2,7 @@
   "navigationBarTitleText": "",
   "enablePullDownRefresh": false,
   "usingComponents": {
+    "wyb-popup": "../../components/wyb-popup/wyb-popup",
     "uni-popup-dialog": "../../uni_modules/uni-popup/components/uni-popup-dialog/uni-popup-dialog",
     "uni-popup": "../../uni_modules/uni-popup/components/uni-popup/uni-popup"
   }

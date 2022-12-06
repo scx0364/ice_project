@@ -6,7 +6,8 @@ const store = common_vendor.createStore({
     num: 0,
     seconds: 3,
     timer: null,
-    redirectInfo: null
+    redirectInfo: null,
+    baseUrl: "http://192.168.1.9:8787/api/"
   },
   getters: {},
   mutations: {

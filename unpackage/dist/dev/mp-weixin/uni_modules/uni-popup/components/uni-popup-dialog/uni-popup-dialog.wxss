@@ -1,18 +1,19 @@
 /* 水平间距 */
 /* 水平间距 */
 .uni-popup-dialog {
-  width: 300px;
-  border-radius: 11px;
+  width: 295px;
+  border-radius: 12px;
   background-color: #fff;
 }
 .uni-dialog-title {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding-top: 25px;
+  padding-top: 28px;
 }
 .uni-dialog-title-text {
-  font-size: 26px;
+  font-size: 18px;
+  color: #333;
   font-weight: 500;
 }
 .uni-dialog-content {
@@ -21,10 +22,11 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
+  padding: 32px 12px 32px 28px;
 }
 .uni-dialog-content-text {
   font-size: 14px;
-  color: #6C6C6C;
+  color: #333;
 }
 .uni-dialog-button-group {
   display: flex;
@@ -39,7 +41,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 45px;
+  height: 50px;
 }
 .uni-border-left {
   border-left-color: #f0f0f0;
@@ -48,7 +50,7 @@
 }
 .uni-dialog-button-text {
   font-size: 16px;
-  color: #333;
+  color: #828282;
 }
 .uni-button-color {
   color: #2979ff;
@@ -72,5 +74,5 @@
   color: #e43d33;
 }
 .uni-popup__info {
-  color: #909399;
+  color: #333;
 }

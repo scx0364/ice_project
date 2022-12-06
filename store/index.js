@@ -13,7 +13,9 @@ const store = createStore({
     // 定时器timer
     timer:null,
     // 重定向的信息对象，包括跳转方式openType和从哪个页面跳转到登录的from
-    redirectInfo:null
+    redirectInfo:null,
+	// 请求的根路径
+	baseUrl:'http://192.168.1.9:8787/api/'
 
 	},
 	getters:{

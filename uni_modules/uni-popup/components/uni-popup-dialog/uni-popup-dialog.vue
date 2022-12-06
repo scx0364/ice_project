@@ -21,7 +21,7 @@
 				<text class="uni-dialog-button-text uni-button-color">{{okText}}</text>
 			</view>
 		</view>
-
+		
 	</view>
 </template>
 
@@ -177,8 +177,8 @@
 	$uni-error: #dd524d !default;
 	
 	.uni-popup-dialog {
-		width: 300px;
-		border-radius: 11px;
+		width: 295px;
+		border-radius: 12px;
 		background-color: #fff;
 	}
 
@@ -188,13 +188,14 @@
 		/* #endif */
 		flex-direction: row;
 		justify-content: center;
-		padding-top: 25px;
+		padding-top: 28px;
 	}
 
 	.uni-dialog-title-text {
-		font-size: 26px;
-    
+		font-size: 18px;
+		color: #333;
 		font-weight: 500;
+		
 	}
 
 	.uni-dialog-content {
@@ -205,11 +206,12 @@
 		justify-content: center;
 		align-items: center;
 		padding: 20px;
+		padding: 32px 12px 32px 28px;
 	}
 
 	.uni-dialog-content-text {
 		font-size: 14px;
-		color: #6C6C6C;
+		color: #333;
 	}
 
 	.uni-dialog-button-group {
@@ -231,7 +233,8 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-		height: 45px;
+		// height: 45px;
+		height: 50px;
 	}
 
 	.uni-border-left {
@@ -242,7 +245,7 @@
 
 	.uni-dialog-button-text {
 		font-size: 16px;
-		color: #333;
+		color: #828282;
 	}
 
 	.uni-button-color {
@@ -272,6 +275,6 @@
 	}
 
 	.uni-popup__info {
-		color: #909399;
+		color: #333;
 	}
 </style>

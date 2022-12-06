@@ -5,6 +5,7 @@
       <view class="my_selfinfo">
         <!-- <image src="../../images/my/avatar.png" mode="" class="my_avatar"></image> -->
         <image :src="userInfo.avatar" mode="" class="my_avatar"></image>
+        <!-- <image src="../../images/my/coco.png" mode="" class="my_avatar"></image> -->
         <text class="my_nickname">{{userInfo.nickname}}</text>
         <!-- 签到按钮 -->
         <button type="default" class="sign">
@@ -84,7 +85,7 @@
       return {
       
         userInfo: {
-          avatar: "../../images/points/coco.png",
+          avatar: "../../images/my/coco.png",
           
           nickname: "未登录"
         },
@@ -97,7 +98,7 @@
       };
     },
     computed: {
-      ...mapState(['token','redirectInfo'])
+      ...mapState(['token','redirectInfo','baseUrl'])
       // ...mapState({
       //   token:state => state.index.token,
       //   redirectInfo:state => state.index.
@@ -209,15 +210,17 @@
       getUserMess() {
         // console.log(this.token)
         uni.request({
-          url: 'http://192.168.1.9:8787/api/demo/user_info',
+          url: this.baseUrl + 'demo/user_info',
           method: 'POST',
           header: {
             'content-type': 'application/json',
             'token': this.token
           },
+		  
           // 返回用户信息，头像昵称
           success: (res2) => {
             // console.log(res2.data.data)
+			// if()
             // 更新用户信息
             this.renewUserInfo(res2.data.data.user_info, res2.data.data)
             // 将用户信息储存在本地

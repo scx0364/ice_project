@@ -31,7 +31,7 @@ const _sfc_main = {
     },
     maskBackgroundColor: {
       type: String,
-      default: "rgba(0, 0, 0, 0.4)"
+      default: "rgba(0, 0, 0, 0.7)"
     }
   },
   watch: {
@@ -336,5 +336,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     l: common_vendor.n($options.isDesktop ? "fixforpc-z-index" : "")
   }) : {});
 }
-var Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/\u53F2\u5F69\u971Eweb/web/ice_porject/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
+var Component = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/ice_project/uni_modules/uni-popup/components/uni-popup/uni-popup.vue"]]);
 wx.createComponent(Component);
