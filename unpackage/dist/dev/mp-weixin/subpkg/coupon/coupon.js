@@ -60,7 +60,7 @@ const _sfc_main = {
     this.getCouponList(0);
   },
   computed: __spreadValues({}, common_vendor.mapState(["token"])),
-  methods: __spreadProps(__spreadValues(__spreadValues({}, common_vendor.mapMutations(["updateData"])), common_vendor.mapActions(["naveToLogin"])), {
+  methods: __spreadProps(__spreadValues(__spreadValues({}, common_vendor.mapMutations(["updateData", "timeHandler"])), common_vendor.mapActions(["naveToLogin"])), {
     checked(i, $event) {
       this.active = i;
       switch (i) {
@@ -112,15 +112,6 @@ const _sfc_main = {
           that.total = res.data.data.total;
         }
       });
-    },
-    timeHandler(time) {
-      let alltime = new Date(time);
-      let year = alltime.getFullYear();
-      let month = alltime.getMonth() + 1;
-      let day = alltime.getDay();
-      let hmonth = month < 10 ? "0" + month : month;
-      let hday = day < 10 ? "0" + day : day;
-      return year + "." + hmonth + "." + hday;
     },
     gotoExchange() {
       common_vendor.index.navigateTo({

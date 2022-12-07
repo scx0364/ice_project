@@ -24,14 +24,15 @@ const _sfc_main = {
   data() {
     return {
       userInfo: {
-        avatar: "../../images/my/coco.png",
+        avatar: "../../static/my-img/coco.png",
         nickname: "\u672A\u767B\u5F55"
       },
       flag: false,
       times: {
         q_num: 0,
         jifen: 0
-      }
+      },
+      is_display: false
     };
   },
   computed: __spreadValues({}, common_vendor.mapState(["token", "redirectInfo", "baseUrl"])),
@@ -58,17 +59,18 @@ const _sfc_main = {
           };
           const res1 = common_vendor.index.$http.post("/demo/login", query);
           res1.then((data) => {
-            if (data.data.msg != "\u767B\u5F55\u6210\u529F") {
+            console.log(data.data);
+            if (data.data.code != 1) {
               common_vendor.index.$showMsg("\u767B\u5F55\u5931\u8D25\uFF01");
               return;
             } else {
               that.updateToken(data.data.data.token);
+              this.is_display = false;
               this.saveTokenToStorage(data.data.data.token);
               common_vendor.index.showToast({
                 icon: "none",
                 title: "\u767B\u5F55\u6210\u529F\uFF01"
               });
-              console.log(this.redirectInfo);
               if (this.redirectInfo && this.redirectInfo.openType == "navigateTo") {
                 common_vendor.index.navigateTo({
                   url: this.redirectInfo.from,
@@ -103,6 +105,11 @@ const _sfc_main = {
           "token": this.token
         },
         success: (res2) => {
+          if (res2.data.code == 401) {
+            console.log(this.is_display);
+            this.is_display = true;
+            common_vendor.index.$showMsg("\u767B\u5F55\u4FE1\u606F\u8FC7\u671F\uFF0C\u8BF7\u91CD\u65B0\u767B\u5F55\uFF01");
+          }
           this.renewUserInfo(res2.data.data.user_info, res2.data.data);
         }
       });
@@ -146,7 +153,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     k: common_assets._imports_4,
     l: common_assets._imports_5,
     m: common_vendor.o((...args) => $options.getUserInfo && $options.getUserInfo(...args)),
-    n: !_ctx.token
+    n: !_ctx.token || $data.is_display
   };
 }
 var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/ice_project/pages/my/my.vue"]]);

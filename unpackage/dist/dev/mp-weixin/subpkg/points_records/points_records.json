@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "积分记录",
+  "enablePullDownRefresh": false,
+  "backgroundColor": "#fff",
+  "usingComponents": {
+    "uni-data-select": "../../uni_modules/uni-data-select/components/uni-data-select/uni-data-select"
+  }
+}

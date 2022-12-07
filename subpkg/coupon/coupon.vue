@@ -146,7 +146,7 @@
 			...mapState(['token'])
 		},
 		methods: {
-			...mapMutations(['updateData']),
+			...mapMutations(['updateData','timeHandler']),
 			...mapActions(['naveToLogin']),
 
 			checked(i, $event) {
@@ -242,15 +242,15 @@
 
 			},
 			// 处理时间的函数
-			timeHandler(time) {
-				let alltime = new Date(time)
-				let year = alltime.getFullYear()
-				let month = alltime.getMonth() + 1
-				let day = alltime.getDay()
-				let hmonth = month < 10? '0' + month:month
-				let hday = day < 10? '0' + day:day
-				return year +'.' + hmonth + '.' + hday 
-			},
+			// timeHandler(time) {
+			// 	let alltime = new Date(time)
+			// 	let year = alltime.getFullYear()
+			// 	let month = alltime.getMonth() + 1
+			// 	let day = alltime.getDay()
+			// 	let hmonth = month < 10? '0' + month:month
+			// 	let hday = day < 10? '0' + day:day
+			// 	return year +'.' + hmonth + '.' + hday 
+			// },
 			// 点击按钮跳转到兑换页面
 			gotoExchange() {
 				uni.navigateTo({

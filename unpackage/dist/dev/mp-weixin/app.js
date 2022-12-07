@@ -7,6 +7,7 @@ if (!Math) {
   "./pages/my/my.js";
   "./subpkg/coupon/coupon.js";
   "./subpkg/exchange_points/exchange_points.js";
+  "./subpkg/points_records/points_records.js";
 }
 const _sfc_main = {
   onLaunch: function() {

@@ -15,10 +15,13 @@ const store = createStore({
     // 重定向的信息对象，包括跳转方式openType和从哪个页面跳转到登录的from
     redirectInfo:null,
 	// 请求的根路径
-	baseUrl:'http://192.168.1.9:8787/api/'
+	baseUrl:'http://192.168.1.9:8787/api/',
+	
+	
 
 	},
 	getters:{
+		
 },
 	mutations:{
 		// 更新token值
@@ -46,7 +49,17 @@ const store = createStore({
      // 更新重定向信息对象
      updateRedirectInfo(state,info) {
        state.redirectInfo = info
-     }
+     },
+	 // 处理时间的函数
+	 timeHandler(state,time) {
+	 	let alltime = new Date(time)
+	 	let year = alltime.getFullYear()
+	 	let month = alltime.getMonth() + 1
+	 	let day = alltime.getDay()
+	 	let hmonth = month < 10? '0' + month:month
+	 	let hday = day < 10? '0' + day:day
+	 	return year +'.' + hmonth + '.' + hday 
+	 },
      
 },
 	actions:{

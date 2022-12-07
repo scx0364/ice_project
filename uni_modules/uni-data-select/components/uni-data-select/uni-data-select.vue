@@ -254,13 +254,18 @@
 		align-items: center;
 		// padding: 15px;
 		cursor: pointer;
-		width: 100%;
+		// width: 100%;
+		width: 130rpx;
+		height: 58rpx;
+		border-radius: 12rpx;
 		flex: 1;
 		box-sizing: border-box;
 	}
 
 	.uni-stat-box {
 		width: 100%;
+		height: 58rpx;
+		border-radius: 12rpx;
 		flex: 1;
 	}
 
@@ -279,7 +284,8 @@
 	}
 
 	.uni-select {
-		font-size: 14px;
+		font-size: 26rpx;
+		color: #828282;
 		border: 1px solid $uni-border-3;
 		box-sizing: border-box;
 		border-radius: 4px;
@@ -295,7 +301,8 @@
 		border-bottom: solid 1px $uni-border-3;
 		width: 100%;
 		flex: 1;
-		height: 35px;
+		// height: 35px;
+		height: 58rpx;
 
     &--disabled{
       background-color: #f5f7fa;
@@ -306,13 +313,15 @@
 	.uni-select__label {
 		font-size: 16px;
 		// line-height: 22px;
-		height: 35px;
+		// height: 35px;
+		height: 58rpx;
 		padding-right: 10px;
 		color: $uni-secondary-color;
 	}
 
 	.uni-select__input-box {
-		height: 35px;
+		// height: 35px;
+		height: 58rpx;
 		position: relative;
 		/* #ifndef APP-NVUE */
 		display: flex;
@@ -363,8 +372,10 @@
 		display: flex;
 		cursor: pointer;
 		/* #endif */
-		line-height: 35px;
-		font-size: 14px;
+		// line-height: 35px;
+		height: 58rpx;
+		font-size: 26rpx;
+		color: #828282;
 		text-align: center;
 		/* border-bottom: solid 1px $uni-border-3; */
 		padding: 0px 10px;
@@ -418,7 +429,9 @@
 	.uni-select__input-text {
 		// width: 280px;
 		width: 100%;
-		color: $uni-main-color;
+		// color: $uni-main-color;
+		color: #828282;
+		font-size: 26rpx;
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		-o-text-overflow: ellipsis;

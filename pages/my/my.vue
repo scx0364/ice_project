@@ -67,7 +67,7 @@
       <!-- 登录按钮 -->
       <!-- <button type="default" class="btn_login" open-type="getPhoneNumber" @getphonenumber="getphonenumber">登录</button> -->
       <button type="default" class="btn_login" open-type="getUserInfo" @getuserinfo="getUserInfo"
-        v-show="!token">登录</button>
+        v-show="!token || is_display">登录</button>
     </view>
 
 
@@ -85,7 +85,7 @@
       return {
       
         userInfo: {
-          avatar: "../../images/my/coco.png",
+          avatar: "../../static/my-img/coco.png",
           
           nickname: "未登录"
         },
@@ -94,15 +94,14 @@
         times: {
           q_num: 0,
           jifen: 0
-        }
+        },
+		// 登录按钮是否显示
+		is_display:false
       };
     },
     computed: {
       ...mapState(['token','redirectInfo','baseUrl'])
-      // ...mapState({
-      //   token:state => state.index.token,
-      //   redirectInfo:state => state.index.
-      // })
+     
     },
     onLoad() {
       // 如果用户已经登录了，页面加载时请求用户信息，渲染头像昵称
@@ -121,9 +120,7 @@
         this.flag = true
         // console.log(e.detail)
         let that = this
-        // if(flag) {
-        //  r
-        // }
+        
         uni.login({
 
           success: (res) => {
@@ -148,8 +145,8 @@
 
             res1.then(data => {
 
-              // console.log(data.data)
-              if (data.data.msg != '登录成功') {
+              console.log(data.data)
+              if (data.data.code != 1) {
                 uni.$showMsg('登录失败！')
                 // console.log(2)
                 return
@@ -157,7 +154,8 @@
                 // 更新token的值
 
                 that.updateToken(data.data.data.token)
-
+				// 隐藏登录按钮
+				this.is_display = false
                 // console.log(that.token)
                 this.saveTokenToStorage(data.data.data.token)
                 uni.showToast({
@@ -166,7 +164,7 @@
                 })
                 
                 // 判断重定向信息对象是否为空，如果不为空，则导航回原来的页面
-                console.log(this.redirectInfo)
+                // console.log(this.redirectInfo)
                 if(this.redirectInfo && this.redirectInfo.openType == 'navigateTo' ) {
                   uni.navigateTo({
                     url:this.redirectInfo.from,
@@ -219,8 +217,18 @@
 		  
           // 返回用户信息，头像昵称
           success: (res2) => {
-            // console.log(res2.data.data)
-			// if()
+            // console.log(res2.data)
+			// 如果token无效，需要重新登录
+			if(res2.data.code == 401) {
+				console.log(this.is_display)
+				// this.naveToLogin({
+				//   openType: 'navigateTo',
+				//   from: '/pages/my/my'
+				// })
+				// 让登录按钮显示，提醒用户重新登录
+				this.is_display = true
+				uni.$showMsg('登录信息过期，请重新登录！')
+			}
             // 更新用户信息
             this.renewUserInfo(res2.data.data.user_info, res2.data.data)
             // 将用户信息储存在本地

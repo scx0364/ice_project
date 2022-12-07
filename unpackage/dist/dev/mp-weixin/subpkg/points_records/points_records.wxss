@@ -1,0 +1,148 @@
+/* 水平间距 */
+/* 水平间距 */
+.points_records_container {
+  position: relative;
+  background-color: #fff;
+}
+.points_records_container .points_box {
+  display: flex;
+  height: 512rpx;
+  background: linear-gradient(180deg, #eef7ff, #ffffff 100%);
+  overflow: hidden;
+  position: relative;
+}
+.points_records_container .points_box .t_left {
+  display: flex;
+  flex-direction: column;
+  margin-left: 55rpx;
+  margin-top: 66rpx;
+}
+.points_records_container .points_box .t_left text:nth-child(1) {
+  font-size: 28rpx;
+  color: #333;
+}
+.points_records_container .points_box .t_left text:nth-child(2) {
+  font-size: 64rpx;
+  font-weight: 700;
+  color: #447CFF;
+}
+.points_records_container .points_box .t_left text:nth-child(3) {
+  font-size: 24rpx;
+  color: #333;
+}
+.points_records_container .points_box .t_right {
+  margin-top: 66rpx;
+  margin-left: 98rpx;
+}
+.points_records_container .points_box .t_right image {
+  width: 164rpx;
+  height: 166rpx;
+}
+.points_records_container .points_box .small_decr {
+  position: absolute;
+  top: 84rpx;
+  left: 422rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background: linear-gradient(108deg, #ffcf30 0%, rgba(255, 255, 255, 0) 100%);
+  border-radius: 50%;
+}
+.points_records_container .points_box .big_decr {
+  position: absolute;
+  right: 0;
+  top: 246rpx;
+  width: 64rpx;
+  height: 64rpx;
+  background: linear-gradient(108deg, rgba(255, 234, 166, 0) 0%, #ffe99f 100%);
+  border-radius: 50%;
+}
+.points_records_container .points_records_info {
+  width: 100%;
+  position: absolute;
+  top: 316rpx;
+  z-index: 999;
+  background-color: #fff;
+  border-radius: 24rpx 24rpx 0 0;
+}
+.points_records_container .points_records_info .select-box {
+  position: absolute;
+  top: 28rpx;
+  right: 32rpx;
+}
+.points_records_container .points_records_info .nav {
+  height: 114rpx;
+  display: flex;
+  line-height: 114rpx;
+  padding: 0 32rpx;
+}
+.points_records_container .points_records_info .nav .records_title {
+  width: 176rpx;
+  height: 66rpx;
+  line-height: 66rpx;
+  text-align: center;
+  border-radius: 72rpx;
+  color: #828282;
+  font-size: 28rpx;
+  margin-top: 24rpx;
+}
+.points_records_container .points_records_info .nav .records_title:nth-child(2) {
+  margin-left: 20rpx;
+}
+.points_records_container .points_records_info .nav .active {
+  background-color: #447CFF;
+  color: #fff;
+}
+.points_records_container .points_records_info .records_content .records_list {
+  box-sizing: border-box;
+  height: 141rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 32rpx;
+  box-shadow: 0px -1rpx 0px 0px rgba(0, 0, 0, 0.1) inset;
+}
+.points_records_container .points_records_info .records_content .records_list .lft_type {
+  display: flex;
+  flex-direction: column;
+  height: 93rpx;
+}
+.points_records_container .points_records_info .records_content .records_list .lft_type .getPoints {
+  font-size: 28rpx;
+  color: #333;
+}
+.points_records_container .points_records_info .records_content .records_list .lft_type .t_date {
+  font-size: 24rpx;
+  color: #828282;
+  margin-top: 12rpx;
+}
+.points_records_container .points_records_info .records_content .records_list .rgt_num {
+  font-size: 48rpx;
+  color: #447CFF;
+}
+.points_records_container .points_records_info .records_content1 .records_list {
+  box-sizing: border-box;
+  height: 142rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 32rpx;
+  box-shadow: 0px -1rpx 0px 0px rgba(0, 0, 0, 0.1) inset;
+}
+.points_records_container .points_records_info .records_content1 .records_list .lft_type {
+  display: flex;
+  flex-direction: column;
+  height: 94rpx;
+}
+.points_records_container .points_records_info .records_content1 .records_list .lft_type .getPoints {
+  font-size: 28rpx;
+  color: #333;
+}
+.points_records_container .points_records_info .records_content1 .records_list .lft_type .t_date {
+  font-size: 24rpx;
+  color: #828282;
+  margin-top: 12rpx;
+}
+.points_records_container .points_records_info .records_content1 .records_list .rgt_num {
+  font-size: 48rpx;
+  color: #EC5446;
+}

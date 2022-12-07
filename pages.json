@@ -6,7 +6,7 @@
                 "navigationBarTitleText": "我的中心",
                 "enablePullDownRefresh": false,
 				"navigationBarBackgroundColor": "#447CFF",
-				"navigationBarTextStyle": "black"
+				"navigationBarTextStyle": "white"
             }
             
         }
@@ -30,8 +30,18 @@
                     "path" : "exchange_points/exchange_points",
                     "style" :                                                                                    
                 {
-                    "navigationBarTitleText": "",
+                    "navigationBarTitleText": "积分兑换",
                     "enablePullDownRefresh": false
+                }
+                
+                }
+                ,{
+                    "path" : "points_records/points_records",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "积分记录",
+                    "enablePullDownRefresh": false,
+					"backgroundColor": "#fff"
                 }
                 
                 }

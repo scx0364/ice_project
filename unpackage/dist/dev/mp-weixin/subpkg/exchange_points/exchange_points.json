@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "",
+  "navigationBarTitleText": "积分兑换",
   "enablePullDownRefresh": false,
   "usingComponents": {
     "wyb-popup": "../../components/wyb-popup/wyb-popup",
