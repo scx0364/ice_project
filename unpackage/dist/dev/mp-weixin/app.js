@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports[Symbol.toStringTag] = "Module";
 var common_vendor = require("./common/vendor.js");
 var store_index = require("./store/index.js");
+var utils_api = require("./utils/api.js");
 if (!Math) {
   "./pages/my/my.js";
   "./subpkg/coupon/coupon.js";
@@ -21,7 +22,7 @@ const _sfc_main = {
     console.log("App Hide");
   }
 };
-var App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "E:/ice_project/App.vue"]]);
+var App = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["__file", "F:/\u53F2\u5F69\u971Eweb/web/ice_porject/App.vue"]]);
 common_vendor.index.$http = common_vendor.$http;
 common_vendor.$http.baseUrl = "http://192.168.1.9:8787/api";
 common_vendor.$http.beforeRequest = function(options) {
@@ -41,6 +42,7 @@ common_vendor.index.$showMsg = function(title = "\u6570\u636E\u52A0\u8F7D\u5931\
 };
 function createApp() {
   const app = common_vendor.createSSRApp(App);
+  app.config.globalProperties.$test = utils_api.test;
   app.use(store_index.store);
   return {
     app

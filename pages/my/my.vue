@@ -64,6 +64,8 @@
           </view>
         </view>
       </view>
+      
+     
       <!-- 登录按钮 -->
       <!-- <button type="default" class="btn_login" open-type="getPhoneNumber" @getphonenumber="getphonenumber">登录</button> -->
       <button type="default" class="btn_login" open-type="getUserInfo" @getuserinfo="getUserInfo"
@@ -78,7 +80,8 @@
   import {
     mapState,
     mapMutations,
-    mapActions
+    mapActions,
+    mapGetters
   } from 'vuex'
   export default {
     data() {
@@ -100,10 +103,14 @@
       };
     },
     computed: {
-      ...mapState(['token','redirectInfo','baseUrl'])
+      ...mapState(['token','redirectInfo','baseUrl','handled_time']),
+      
      
     },
     onLoad() {
+      this.$test()
+      this.timeHandler(1674533896)
+      console.log(this.handled_time)
       // 如果用户已经登录了，页面加载时请求用户信息，渲染头像昵称
       if (this.token) {
         this.getUserMess()
@@ -113,7 +120,7 @@
     },
     methods: {
       // 引入index.js中更新token的方法
-      ...mapMutations(['updateToken','updateRedirectInfo']),
+      ...mapMutations(['updateToken','updateRedirectInfo','timeHandler']),
       // 引入index.js中的倒计时跳转方法
       ...mapActions(['naveToLogin']),
       getUserInfo(e) {

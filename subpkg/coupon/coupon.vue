@@ -80,20 +80,23 @@
 					<text class="activity">活动优惠</text>
 					<view class="to_use">已过期</view>
 					<text class="use_time">有效期：<text>{{item3.createtime}}</text> ~ <text>{{item3.to_time}}</text></text>
+					<!-- <text class="use_time">有效期：<text>{{timeHandler(1657890345)}}</text> ~ <text>{{timeHandler(1657890788)}}</text></text> -->
 				</view>
 			</view>
 
 		</view>
 		<my-button :text="text" v-if="active == 0" @myevent="gotoExchange"></my-button>
+    
 	</view>
 </template>
 
 <script>
-	
+
 	import {
 		mapState,
 		mapMutations,
-		mapActions
+		mapActions,
+    mapGetters
 	} from 'vuex'
 	export default {
 		data() {
@@ -131,6 +134,7 @@
 		},
 		// 页面加载
 		onLoad() {
+      
 			// 判断是否登录，如果没有登录，就跳转到登录页面
 			if(this.token == '0') {
 				this.naveToLogin({
@@ -143,7 +147,8 @@
 			
 		},
 		computed: {
-			...mapState(['token'])
+			...mapState(['token']),
+      
 		},
 		methods: {
 			...mapMutations(['updateData','timeHandler']),

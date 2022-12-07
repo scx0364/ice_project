@@ -86,13 +86,13 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       duration: 2e3,
       ["before-close"]: true
     }),
-    r: common_vendor.sr("popup", "487c8f72-0"),
+    r: common_vendor.sr("popup", "ec77fec0-0"),
     s: common_vendor.o($options.change),
     t: common_vendor.p({
       type: "dialog"
     }),
     v: common_assets._imports_2$1,
-    w: common_vendor.sr("pop", "487c8f72-2"),
+    w: common_vendor.sr("pop", "ec77fec0-2"),
     x: common_vendor.p({
       mode: "size-fixed",
       type: "center",
@@ -110,5 +110,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   };
 }
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/ice_project/subpkg/exchange_points/exchange_points.vue"]]);
+var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/\u53F2\u5F69\u971Eweb/web/ice_porject/subpkg/exchange_points/exchange_points.vue"]]);
 wx.createPage(MiniProgramPage);

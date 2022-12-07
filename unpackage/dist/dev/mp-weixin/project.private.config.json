@@ -9,7 +9,7 @@
             "list": [
                 {
                     "name": "",
-                    "pathName": "subpkg/coupon/coupon",
+                    "pathName": "pages/my/my",
                     "query": "",
                     "launchMode": "default",
                     "scene": null
