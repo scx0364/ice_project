@@ -227,9 +227,9 @@
 							// console.log(item.to_time)
 							// 调用时间处理函数，把时间戳处理为年月日的格式
 							 // a = this.timeHandler(item.createtime)
-							 item.createtime = this.timeHandler(item.createtime)
+							 item.createtime = this.$timeHandler(item.createtime,'.')
 							 // b = this.timeHandler(item.to_time)
-							 item.to_time = this.timeHandler(item.to_time)
+							 item.to_time = this.$timeHandler(item.to_time,'.')
 							
 						})
 						// console.log(res.data.data.data)
@@ -246,16 +246,7 @@
 				})
 
 			},
-			// 处理时间的函数
-			// timeHandler(time) {
-			// 	let alltime = new Date(time)
-			// 	let year = alltime.getFullYear()
-			// 	let month = alltime.getMonth() + 1
-			// 	let day = alltime.getDay()
-			// 	let hmonth = month < 10? '0' + month:month
-			// 	let hday = day < 10? '0' + day:day
-			// 	return year +'.' + hmonth + '.' + hday 
-			// },
+		
 			// 点击按钮跳转到兑换页面
 			gotoExchange() {
 				uni.navigateTo({

@@ -34,42 +34,8 @@ const _sfc_main = {
           title: "\u4F7F\u7528\u8BB0\u5F55"
         }
       ],
-      infoList: [
-        {
-          item_name: "\u7B7E\u5230\u9886\u79EF\u5206",
-          num: 13
-        },
-        {
-          item_name: "\u5B8C\u6210\u8BA2\u5355",
-          num: 8
-        },
-        {
-          item_name: "\u62BD\u5956",
-          num: 26
-        },
-        {
-          item_name: "\u7B7E\u5230\u9886\u79EF\u5206",
-          num: 10
-        }
-      ],
-      infoList1: [
-        {
-          item_name: "\u7B7E\u5230\u9886\u79EF\u5206",
-          num: 11
-        },
-        {
-          item_name: "\u5B8C\u6210\u8BA2\u5355",
-          num: 3
-        },
-        {
-          item_name: "\u62BD\u5956",
-          num: 24
-        },
-        {
-          item_name: "\u7B7E\u5230\u9886\u79EF\u5206",
-          num: 9
-        }
-      ],
+      infoList: [],
+      infoList1: [],
       range: [{
         value: 0,
         text: "\u5168\u90E8"
@@ -89,22 +55,56 @@ const _sfc_main = {
         page: 1,
         type: 0
       },
-      total: 0
+      total: 0,
+      isLoading: false
     };
   },
   computed: __spreadValues({}, common_vendor.mapState(["baseUrl", "token"])),
-  methods: __spreadProps(__spreadValues(__spreadValues({}, common_vendor.mapActions(["naveToLogin"])), common_vendor.mapMutations(["timeHandler"])), {
+  onReachBottom() {
+    console.log(this.reqObj.page);
+    console.log(this.total);
+    if (this.reqObj.limit * this.reqObj.page >= this.total) {
+      common_vendor.index.$showMsg("\u6570\u636E\u52A0\u8F7D\u5B8C\u6BD5\uFF01");
+      return;
+    }
+    this.reqObj.page += 1;
+    if (this.isLoading)
+      return;
+    common_vendor.index.$showMsg("\u6570\u636E\u52A0\u8F7D\u4E2D");
+    this.getNavList(this.active);
+  },
+  onLoad() {
+  },
+  methods: __spreadProps(__spreadValues({}, common_vendor.mapActions(["naveToLogin"])), {
     changeTab(i) {
       this.active = i;
+      switch (i) {
+        case 0:
+          this.infoList1 = [];
+          if (this.infoList.length != 0) {
+            console.log(123);
+            return;
+          }
+        case 1:
+          this.infoList = [];
+          if (this.infoList1.length != 0)
+            return;
+      }
+      this.reqObj.page = 1;
       this.getNavList(i);
     },
     change(e) {
+      this.reqObj.page = 1;
+      this.infoList = [];
+      this.infoList1 = [];
       console.log(e);
       this.reqObj.type = e;
       this.getNavList(this.active);
     },
     getNavList(i) {
+      let that = this;
       this.reqObj.status = i + 1;
+      this.isLoading = true;
       common_vendor.index.request({
         url: this.baseUrl + "demo/user_integral_record_list",
         method: "POST",
@@ -113,20 +113,21 @@ const _sfc_main = {
           "token": this.token
         },
         success: (res) => {
+          that.isLoading = false;
           if (res.data.code == 401) {
             this.naveToLogin({
               openType: "navigateTo",
               from: "/subpkg/points_records/points_records"
             });
           }
-          console.log(res.data.data.data.data);
-          console.log(this.timeHandler(1491635035));
           res.data.data.data.data.forEach((item, index) => {
-            item.create_time = this.timeHandler(item.create_time);
+            item.create_time = that.$timeHandler(item.create_time, "-");
           });
           this.infoList = [...this.infoList, ...res.data.data.data.data.filter((x) => x.status == 1)];
           this.infoList1 = [...this.infoList1, ...res.data.data.data.data.filter((x) => x.status == 2)];
+          console.log(this.infoList);
           this.total = res.data.data.data.total;
+          console.log(this.total);
         }
       });
     }
@@ -163,8 +164,9 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.active == 0 ? {
     g: common_vendor.f($data.infoList, (item1, i1, i0) => {
       return {
-        a: common_vendor.t(item1.item_name),
-        b: common_vendor.t(item1.num)
+        a: common_vendor.t(item1.explain),
+        b: common_vendor.t(item1.create_time),
+        c: common_vendor.t(item1.integral)
       };
     })
   } : {}, {
@@ -172,11 +174,12 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.active == 1 ? {
     i: common_vendor.f($data.infoList1, (item2, i2, i0) => {
       return {
-        a: common_vendor.t(item2.item_name),
-        b: common_vendor.t(item2.num)
+        a: common_vendor.t(item2.explain),
+        b: common_vendor.t(item2.create_time),
+        c: common_vendor.t(item2.integral)
       };
     })
   } : {});
 }
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/\u53F2\u5F69\u971Eweb/web/ice_porject/subpkg/points_records/points_records.vue"]]);
+var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/ice_project/subpkg/points_records/points_records.vue"]]);
 wx.createPage(MiniProgramPage);

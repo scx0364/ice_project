@@ -7,8 +7,7 @@ const store = common_vendor.createStore({
     seconds: 3,
     timer: null,
     redirectInfo: null,
-    baseUrl: "http://192.168.1.9:8787/api/",
-    handled_time: null
+    baseUrl: "http://192.168.1.9:8787/api/"
   },
   getters: {},
   mutations: {
@@ -31,15 +30,6 @@ const store = common_vendor.createStore({
     },
     updateRedirectInfo(state, info) {
       state.redirectInfo = info;
-    },
-    timeHandler(state, time) {
-      let alltime = new Date(time);
-      let year = alltime.getFullYear();
-      let month = alltime.getMonth() + 1;
-      let day = alltime.getDay();
-      let hmonth = month < 10 ? "0" + month : month;
-      let hday = day < 10 ? "0" + day : day;
-      state.handled_time = year + "." + hmonth + "." + hday;
     }
   },
   actions: {

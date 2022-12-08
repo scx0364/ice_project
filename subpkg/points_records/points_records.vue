@@ -32,11 +32,11 @@
 				<!-- 循环填充内容的盒子 -->
 				<view class="records_list" v-for="(item1,i1) in infoList">
 					<view class="lft_type">
-						<text class="getPoints">{{item1.item_name}}</text>
-						<text class="t_date">2022-11-26</text>
+						<text class="getPoints">{{item1.explain}}</text>
+						<text class="t_date">{{item1.create_time}}</text>
 					</view>
 					<view class="rgt_num">
-						+{{item1.num}}
+						+{{item1.integral}}
 					</view>
 				</view>
 			</view>
@@ -45,11 +45,11 @@
 				<!-- 循环填充内容的盒子 -->
 				<view class="records_list" v-for="(item2,i2) in infoList1">
 					<view class="lft_type">
-						<text class="getPoints">{{item2.item_name}}</text>
-						<text class="t_date">2022-11-26</text>
+						<text class="getPoints">{{item2.explain}}</text>
+						<text class="t_date">{{item2.create_time}}</text>
 					</view>
 					<view class="rgt_num">
-						-{{item2.num}}
+						-{{item2.integral}}
 					</view>
 				</view>
 			</view>
@@ -76,34 +76,10 @@ import { mapState,mapActions} from 'vuex';
 					}
 				],
 				infoList:[
-					{
-						item_name:'签到领积分',
-						num:13
-					},{
-						item_name:'完成订单',
-						num:8
-					},{
-						item_name:'抽奖',
-						num:26
-					},{
-						item_name:'签到领积分',
-						num:10
-					},
+					
 				],
 				infoList1:[
-					{
-						item_name:'签到领积分',
-						num:11
-					},{
-						item_name:'完成订单',
-						num:3
-					},{
-						item_name:'抽奖',
-						num:24
-					},{
-						item_name:'签到领积分',
-						num:9
-					},
+					
 				],
 				range:[{
 					value:0,text:"全部"
@@ -122,35 +98,99 @@ import { mapState,mapActions} from 'vuex';
 					type:0
 				},
 				// 数据总数
-				total:0
-					
+				total:0,
+				// 定义节流阀，防止重复请求
+				isLoading: false	
 				
 			};
 		},
 		computed:{
 			...mapState(['baseUrl','token'])
 		},
+		// 触底刷新
+		onReachBottom() {
+			// console.log('aaaa')
+			// console.log(this.reqObj.limit)
+			console.log(this.reqObj.page)
+			console.log(this.total)
+			// 判断是否还有下一页数据
+			if (this.reqObj.limit * this.reqObj.page >= this.total) {
+				uni.$showMsg('数据加载完毕！')
+				return
+			}
+			
+			// 如果还有数据，让当前的页码自增加1
+			this.reqObj.page += 1
+			// 判断是否有请求正在执行
+			if (this.isLoading) return
+			// 如果没有请求正在执行，则请求下一页数据,选中项不变
+			uni.$showMsg('数据加载中')
+			this.getNavList(this.active)
+			
+		},
+		onLoad() {
+			// this.change(0)
+		},
 		methods:{
 			...mapActions(['naveToLogin']),
-			...mapMutations(['timeHandler']),
+			
 			// 点击标题切换内容
 			changeTab(i) {
 				// console.log(i)
 				// 让active的值等于当前标题的索引，以添加样式以及切换到对应的内容
 				this.active = i
+				
+				
+				switch (i) {
+					case 0:
+					
+						// 点击当前的标题，让另外一个标题下的数据清空
+						this.infoList1 = []
+						
+						// 如果在当前标题下重复点击标题，判断是否有数据，如果有就直接return，从而避免重复请求数据，导致数据无限叠加
+						if (this.infoList.length != 0) {
+							console.log(123)
+							return
+						}
+						case 1:
+							this.infoList = []
+							
+							if (this.infoList1.length != 0) return
+						
+				
+				}
+				// 切换标题，让页码重新改为1
+				this.reqObj.page = 1
+				// console.log(555)
+			
+				
+
 				// 请求数据
 				this.getNavList(i)
 			},
 			// 下拉框的事件
 			change(e) {
+				this.reqObj.page = 1
+				this.infoList = []
+				this.infoList1 = []
+				// 选中下拉框的元素，获得当前的value值，赋值给type
 			      console.log(e)
 				  this.reqObj.type = e
+				  // console.log(this.reqObj)
+				  // console.log(this.infoList)
 				  this.getNavList(this.active)
+				  // console.log(this.infoList)
+				  // console.log(this.infoList.filter(x => x.type == e))
+				  // this.infoList = this.infoList.filter(x => x.type == e)
+				  // console.log(this.infoList)
 			    },
 			// 请求数据的方法
 			getNavList(i) {
+				let that = this
 				// console.log(this.token)
 				this.reqObj.status = i + 1
+				// 开始请求，打开节流阀
+				this.isLoading = true
 				uni.request({
 					url: this.baseUrl + 'demo/user_integral_record_list',
 					method:'POST',
@@ -160,6 +200,9 @@ import { mapState,mapActions} from 'vuex';
 						},
 					// 请求成功的回调函数
 					success: (res) => {
+						
+						// 请求完成，关闭节流阀
+						that.isLoading = false
 						// 判断code是否等于1
 						// console.log(res.data.code)
 						if(res.data.code == 401 ) {
@@ -170,33 +213,38 @@ import { mapState,mapActions} from 'vuex';
 							})
 							// console.log(this.token)
 						}
-						console.log(res.data.data.data.data)
-						console.log(this.timeHandler(1491635035))
+						// console.log(res.data.data.data.data)
+						// console.log(that.$timeHandler(1491635035))
 						res.data.data.data.data.forEach((item,index) => {
 							// console.log(item.create_time)
-							// console.log(item.to_time)
+							
 							// 调用时间处理函数，把时间戳处理为年月日的格式
-							 // a = this.timeHandler(item.createtime)
-							 item.create_time = this.timeHandler(item.create_time)
-							 // b = this.timeHandler(item.to_time)
-							 // item.to_time = this.timeHandler(item.to_time)
+							
+							 item.create_time = that.$timeHandler(item.create_time,'-')
+							 
 							 // console.log(item.create_time)
 							
 						})
 						// 筛选状态为1的数据，与原来的infolist拼接
 						this.infoList = [...this.infoList,...res.data.data.data.data.filter(x => x.status == 1)]
 						this.infoList1 = [...this.infoList1,...res.data.data.data.data.filter(x => x.status == 2)]
-						// console.log(this.infoList)
+						console.log(this.infoList)
 						// console.log(this.infoList1)
 						// 修改数据总数
 						this.total = res.data.data.data.total
-						// console.log(this.total) 
+						
+						console.log(this.total) 
+						
+						// this.change()
 					}
 					}) 
 						
 					
 				
-			}
+			},
+			
+			
+			
 		}
 	}
 </script>

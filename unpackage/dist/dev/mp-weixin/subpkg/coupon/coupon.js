@@ -103,8 +103,8 @@ const _sfc_main = {
             return;
           }
           res.data.data.data.forEach((item, index) => {
-            item.createtime = this.timeHandler(item.createtime);
-            item.to_time = this.timeHandler(item.to_time);
+            item.createtime = this.$timeHandler(item.createtime, ".");
+            item.to_time = this.$timeHandler(item.to_time, ".");
           });
           that.coupons0 = [...that.coupons0, ...res.data.data.data.filter((x) => x.status == 1)];
           that.coupons1 = [...that.coupons1, ...res.data.data.data.filter((x) => x.status == 2)];
@@ -191,5 +191,5 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   } : {});
 }
-var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "F:/\u53F2\u5F69\u971Eweb/web/ice_porject/subpkg/coupon/coupon.vue"]]);
+var MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render], ["__file", "E:/ice_project/subpkg/coupon/coupon.vue"]]);
 wx.createPage(MiniProgramPage);

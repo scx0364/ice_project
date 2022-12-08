@@ -108,9 +108,9 @@
      
     },
     onLoad() {
-      this.$test()
-      this.timeHandler(1674533896)
-      console.log(this.handled_time)
+      // this.$test()
+      // console.log(this.$timeHandler(2994533896))
+      // console.log(this.handled_time)
       // 如果用户已经登录了，页面加载时请求用户信息，渲染头像昵称
       if (this.token) {
         this.getUserMess()

@@ -16,8 +16,6 @@ const store = createStore({
     redirectInfo:null,
 	// 请求的根路径
 	baseUrl:'http://192.168.1.9:8787/api/',
-	// 年月日格式的时间
-  handled_time:null
 	
 
 	},
@@ -52,17 +50,7 @@ const store = createStore({
      updateRedirectInfo(state,info) {
        state.redirectInfo = info
      },
-	 // 处理时间的函数
-	 timeHandler(state,time) {
-	 	let alltime = new Date(time)
-	 	let year = alltime.getFullYear()
-	 	let month = alltime.getMonth() + 1
-	 	let day = alltime.getDay()
-	 	let hmonth = month < 10? '0' + month:month
-	 	let hday = day < 10? '0' + day:day
-	 	// return year +'.' + hmonth + '.' + hday 
-	 	state.handled_time = year +'.' + hmonth + '.' + hday 
-	 },
+	
      
 },
 	actions:{

@@ -7174,7 +7174,15 @@ const subPackages = [
         style: {
           navigationBarTitleText: "\u79EF\u5206\u8BB0\u5F55",
           enablePullDownRefresh: false,
-          backgroundColor: "#fff"
+          backgroundColor: "#fff",
+          onReachBottomDistance: 20
+        }
+      },
+      {
+        path: "lucky_prize/lucky_prize",
+        style: {
+          navigationBarTitleText: "",
+          enablePullDownRefresh: false
         }
       }
     ]
