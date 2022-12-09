@@ -23,7 +23,7 @@
 .wyb-popup-container {
 		position: relative;
 		box-sizing: border-box;
-		background-color: #808080;
+		/* background-color: #808080; */
 		border-radius: 20rpx;
 }
 .wyb-popup-slot {

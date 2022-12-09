@@ -19,7 +19,7 @@
 		<text class="consum_points">
 			每20积分可抽一次
 		</text>
-		<button class="try_now">立即抽奖</button>
+		<button class="try_now" @click="rotate()">立即抽奖</button>
 		<image src="../../images/points/lucky_records.png" class="lucky_records"></image>
 		
 		<view class="list_container">
@@ -31,7 +31,10 @@
 					
 				</view>
 			</view>
-			<scroll-view scroll-y="true" class="scroll_y" scroll-x="false">
+			<view class="scroll_container">
+				
+			
+			<scroll-view scroll-y="true" class="scroll_y" scroll-x="false" >
 			<view class="list_box">
 				<view class="list_title">
 					<view class="time">
@@ -52,6 +55,7 @@
 				
 			</view>
 			</scroll-view>
+			</view>
 		</view>
 		
 		<!-- <view>1. 注册或未参与过此活动的用户</view>
@@ -63,6 +67,19 @@
 			<view>2. 红包奖励直接到用户账号，可以用于商城购物</view>
 			 <view>3. 参与活动时，需要分享给好友一起参与</view> --> 
 	<!-- </view> -->
+	<wyb-popup ref="pop" mode="size-fixed" type="center" height="564" width="412" radius="20" :showCloseIcon="true" closeIconPos="bottom-right"
+	closeIcon="../../static/my-img/close.png" closeIconSize="82" vertOffset="-80" horiOffset="165" 
+	:maskClickClose= "false" maskAlpha="0.7" negativeTop="30">
+	    <view class="popup-content">
+			<view class="prize_info">
+				<text class="b_tex">恭喜你</text>
+				<text class="s_tex">抽中2元优惠券</text>
+			</view>
+	        <image src="../../images/points/disgif.png" mode="" class="pop_pic"></image>
+			  
+			  <image src="../../images/points/btn_pic.png" class="to_see"></image>
+	    </view>
+	</wyb-popup>
 </template>
 <script>
 	
@@ -71,7 +88,11 @@
 		return parseInt(Math.random() * (max - min + 1) + min);
 	}
 	import {mapState} from 'vuex'
+	import wybPopup from '@/components/wyb-popup/wyb-popup.vue'
 	export default {
+		components: {
+		    wybPopup
+		},
 		data() {
 			return {
 				isRotate: false, //是否旋转
@@ -89,7 +110,7 @@
 			}
 		},
 		onLoad() {
-			// console.log("aaaa")
+			
 			this.getPrizeInfo()
 		},
 		computed:{
@@ -111,11 +132,12 @@
 					this.isRotate = true;
 					setTimeout(() => {
 						this.isRotate = false;
-						uni.showToast({
-							title: prize,
-							icon: 'none',
-							duration: 3000
-						})
+						this.$refs.pop.show()
+						// uni.showToast({
+						// 	title: prize,
+						// 	icon: 'none',
+						// 	duration: 3000
+						// })
 					}, 5000)
 				}, 300)
 			},
@@ -278,14 +300,21 @@
 				border-radius: 87rpx;
 			}
 		}
+		.scroll_container {
+			width: 100%;
+			 position: absolute;
+			 top: 10rpx;
+			 height: 1000rpx;
+			 padding-top: 10rpx;
+		}
 		.scroll_y {
 			position: absolute;
-			top: 18rpx;
+			top: 10rpx;
 			height: 1000rpx;
 		}
 		.list_box {
 			position: absolute;
-			top: 8rpx;
+			// top: 8rpx;
 			left: 32rpx;
 			width: 648rpx;
 			height: 1500rpx;
@@ -294,6 +323,10 @@
 			// padding: 10rpx 24rpx 0;
 			padding: 0rpx 24rpx ;
 			.list_title {
+				position: sticky;
+				// bottom: 920rpx;
+				top: 10rpx;
+				left: 32rpx;
 				height: 90rpx;
 				line-height: 90rpx;
 				display: flex;
@@ -354,5 +387,52 @@
 			/* transform: rotate(360deg); */
 			transform: rotate(3800deg);
 		}
+	}
+	
+	.popup-content {
+		position: relative;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		width: 412rpx;
+		height: 564rpx;
+		background: rgba(0,0,0,0.0070);
+		// background: rgba(0,0,0,0.70);
+		// border-radius: 20rpx;
+		.prize_info {
+			width: 284rpx;
+			height: 184rpx;
+			display: flex;
+			flex-direction: column;
+			font-weight: 700;
+			text-align: center;
+			margin-top: 20rpx;
+			.b_tex {
+				font-size: 48rpx;
+				color: goldenrod;
+			}
+			.s_tex {
+				font-size: 32rpx;
+				color: goldenrod;
+				margin-top: 20rpx;
+			}
+		}
+		.pop_pic {
+			position: absolute;
+			top: 162rpx;
+			display: block;
+			width: 412rpx;
+			height: 274rpx;
+		}
+		.to_see {
+			position: absolute;
+			// bottom: 130rpx;
+			top: 416rpx;
+			display: block;
+			width:362rpx;
+			height: 100rpx;
+		}
+		
 	}
 </style>

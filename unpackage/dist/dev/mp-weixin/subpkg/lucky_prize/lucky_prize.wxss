@@ -95,14 +95,20 @@
   background: #0f2d99;
   border-radius: 87rpx;
 }
+.list_container .scroll_container {
+  width: 100%;
+  position: absolute;
+  top: 10rpx;
+  height: 1000rpx;
+  padding-top: 10rpx;
+}
 .list_container .scroll_y {
   position: absolute;
-  top: 18rpx;
+  top: 10rpx;
   height: 1000rpx;
 }
 .list_container .list_box {
   position: absolute;
-  top: 8rpx;
   left: 32rpx;
   width: 648rpx;
   height: 1500rpx;
@@ -111,6 +117,10 @@
   padding: 0rpx 24rpx;
 }
 .list_container .list_box .list_title {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 10rpx;
+  left: 32rpx;
   height: 90rpx;
   line-height: 90rpx;
   display: flex;
@@ -162,4 +172,46 @@
     /* transform: rotate(360deg); */
     transform: rotate(3800deg);
 }
+}
+.popup-content {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 412rpx;
+  height: 564rpx;
+  background: rgba(0, 0, 0, 0.007);
+}
+.popup-content .prize_info {
+  width: 284rpx;
+  height: 184rpx;
+  display: flex;
+  flex-direction: column;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 20rpx;
+}
+.popup-content .prize_info .b_tex {
+  font-size: 48rpx;
+  color: goldenrod;
+}
+.popup-content .prize_info .s_tex {
+  font-size: 32rpx;
+  color: goldenrod;
+  margin-top: 20rpx;
+}
+.popup-content .pop_pic {
+  position: absolute;
+  top: 162rpx;
+  display: block;
+  width: 412rpx;
+  height: 274rpx;
+}
+.popup-content .to_see {
+  position: absolute;
+  top: 416rpx;
+  display: block;
+  width: 362rpx;
+  height: 100rpx;
 }

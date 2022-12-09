@@ -197,7 +197,7 @@ const _sfc_main = {
     },
     bgColor: {
       type: String,
-      default: "#ffffff"
+      default: "rgba(0,0,0,0.0070)"
     },
     zoomLessenMulti: {
       type: Number,

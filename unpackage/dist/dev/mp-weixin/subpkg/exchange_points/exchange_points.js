@@ -101,7 +101,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       radius: "20",
       showCloseIcon: true,
       closeIconPos: "bottom-right",
-      closeIcon: "http://192.168.1.9:8787/uploads/20221116/frame.png",
+      closeIcon: "../../static/my-img/close.png",
       closeIconSize: "82",
       vertOffset: "-130",
       horiOffset: "228",

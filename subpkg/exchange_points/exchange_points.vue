@@ -77,7 +77,7 @@
   	<uni-popup-dialog type="info" mode="base" title="兑换" :content="'您需要花' + exchangeList.item_price + '积分兑换优惠券'" message="成功消息" :duration="2000" :before-close="true" @close="close" @confirm="confirm"></uni-popup-dialog>
   </uni-popup>
   <wyb-popup ref="pop" mode="size-fixed" type="center" height="588" width="538" radius="20" :showCloseIcon="true" closeIconPos="bottom-right"  
-  closeIcon="http://192.168.1.9:8787/uploads/20221116/frame.png" closeIconSize="82" vertOffset="-130" horiOffset="228" 
+  closeIcon="../../static/my-img/close.png" closeIconSize="82" vertOffset="-130" horiOffset="228" 
   :maskClickClose= "false" maskAlpha="0.7">
       <view class="popup-content">
           <image src="../../images/points/Frame.png" mode="" class="pop_pic"></image>

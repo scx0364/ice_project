@@ -260,7 +260,7 @@
 			},
 			bgColor: {
 				type: String,
-				default: '#ffffff'
+				default: 'rgba(0,0,0,0.0070)'
 			},
 			zoomLessenMulti: {
 				type: Number,
@@ -390,7 +390,7 @@
 	.wyb-popup-container {
 		position: relative;
 		box-sizing: border-box;
-		background-color: #808080;
+		/* background-color: #808080; */
 		border-radius: 20rpx;
 		
 	}
